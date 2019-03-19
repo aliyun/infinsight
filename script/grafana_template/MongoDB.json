@@ -42,7 +42,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -123,7 +123,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -204,7 +204,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -284,7 +284,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "s",
       "gauge": {
         "maxValue": 100,
@@ -364,7 +364,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -444,7 +444,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -524,7 +524,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -604,7 +604,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -694,7 +694,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -780,7 +780,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -866,7 +866,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -952,7 +952,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1038,7 +1038,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1229,7 +1229,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1331,7 +1331,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1435,7 +1435,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -1540,7 +1540,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1645,7 +1645,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -1745,7 +1745,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1831,7 +1831,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1931,7 +1931,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2017,7 +2017,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2103,7 +2103,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2203,7 +2203,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2289,7 +2289,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2375,7 +2375,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2471,7 +2471,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -2570,7 +2570,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2656,7 +2656,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2742,7 +2742,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2842,7 +2842,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2928,7 +2928,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3014,7 +3014,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3114,7 +3114,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3200,7 +3200,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3300,7 +3300,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3386,7 +3386,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3486,7 +3486,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3572,7 +3572,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3672,7 +3672,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3758,7 +3758,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3858,7 +3858,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -3944,7 +3944,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -4044,7 +4044,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -4130,7 +4130,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "Infinsight",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -4226,7 +4226,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4328,7 +4328,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4430,7 +4430,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4510,7 +4510,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4605,7 +4605,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4685,7 +4685,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4780,7 +4780,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4860,7 +4860,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -4962,7 +4962,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5042,7 +5042,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5137,7 +5137,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5217,7 +5217,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5312,7 +5312,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5392,7 +5392,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5487,7 +5487,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5567,7 +5567,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5662,7 +5662,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5742,7 +5742,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5837,7 +5837,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5924,7 +5924,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6019,7 +6019,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6099,7 +6099,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6194,7 +6194,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 8,
@@ -6289,7 +6289,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6384,7 +6384,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6479,7 +6479,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6559,7 +6559,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6654,7 +6654,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6734,7 +6734,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "Infinsight",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -6829,7 +6829,7 @@
           "text": "all{hid=0, pid=0}",
           "value": "all{hid=0, pid=0}"
         },
-        "datasource": "Prometheus",
+        "datasource": "Infinsight",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -6854,7 +6854,7 @@
           "text": "mongodb{hid=1, pid=0}",
           "value": "mongodb{hid=1, pid=0}"
         },
-        "datasource": "Prometheus",
+        "datasource": "Infinsight",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -6879,7 +6879,7 @@
           "text": "127.0.0.1:27017",
           "value": "127.0.0.1:27017"
         },
-        "datasource": "Prometheus",
+        "datasource": "Infinsight",
         "definition": "",
         "hide": 0,
         "includeAll": false,
