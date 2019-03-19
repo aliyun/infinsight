@@ -1,2 +1,6 @@
 *.swp
 .DS_Store
+add_service.js
+add_instance.js
+create_index.js
+grafana.json

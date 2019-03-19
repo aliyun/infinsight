@@ -94,7 +94,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|connections|current{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|connections|current{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -175,7 +175,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|connections|available{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|connections|available{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -256,7 +256,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|uptime{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|uptime{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A"
@@ -336,7 +336,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|members|PRIMARY+|optime|ts;\nmongodb|members|SECONDARY+true|optime|ts;\n[arraySub($2, $1)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|members|PRIMARY+|optime|ts;\nservice_name|members|SECONDARY+true|optime|ts;\n[arraySub($2, $1)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A"
@@ -416,7 +416,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|maximum bytes configured{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|maximum bytes configured{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A"
@@ -496,7 +496,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|bytes currently in the cache{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|bytes currently in the cache{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A"
@@ -576,7 +576,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|tracked dirty bytes in the cache{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|tracked dirty bytes in the cache{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A"
@@ -656,7 +656,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|bytes currently in the cache;\nmongodb|wiredTiger|cache|maximum bytes configured;\n[arrayDiv(arrayDigitMul($1, 100),$2)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|bytes currently in the cache;\nservice_name|wiredTiger|cache|maximum bytes configured;\n[arrayDiv(arrayDigitMul($1, 100),$2)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A"
@@ -727,7 +727,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|mem|virtual;\nmongodb|mem|resident;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|mem|virtual;\nservice_name|mem|resident;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -813,7 +813,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|connections|current;\nmongodb|connections|available;\nmongodb|connections|internal_current;\nmongodb|connections|internal_available;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|connections|current;\nservice_name|connections|available;\nservice_name|connections|internal_current;\nservice_name|connections|internal_available;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -899,7 +899,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|network|bytesIn;\nmongodb|network|bytesOut;\nmongodb|network|physicalBytesIn;\nmongodb|network|physicalBytesOut;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|network|bytesIn;\nservice_name|network|bytesOut;\nservice_name|network|physicalBytesIn;\nservice_name|network|physicalBytesOut;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -985,7 +985,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|members|PRIMARY+|optime|ts;\nmongodb|members|SECONDARY+true|optime|ts;\n[arraySub($2, $1)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|members|PRIMARY+|optime|ts;\nservice_name|members|SECONDARY+true|optime|ts;\n[arraySub($2, $1)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "delay",
@@ -1071,14 +1071,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|bytes currently in the cache;\nmongodb|wiredTiger|cache|maximum bytes configured\n[arrayDiv(arrayDigitMul($1, 100), $2)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|bytes currently in the cache;\nservice_name|wiredTiger|cache|maximum bytes configured\n[arrayDiv(arrayDigitMul($1, 100), $2)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "cache usage percent",
           "refId": "A"
         },
         {
-          "expr": "mongodb|wiredTiger|cache|tracked dirty bytes in the cache;\nmongodb|wiredTiger|cache|maximum bytes configured\n[arrayDiv(arrayDigitMul($1, 100), $2)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|tracked dirty bytes in the cache;\nservice_name|wiredTiger|cache|maximum bytes configured\n[arrayDiv(arrayDigitMul($1, 100), $2)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "dirty cache usage percent",
@@ -1162,7 +1162,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|extra_info|page_faults;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|extra_info|page_faults;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1264,7 +1264,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|opcounters|query;\nmongodb|opcounters|insert;\nmongodb|opcounters|update;\nmongodb|opcounters|delete;\nmongodb|opcounters|getmore;\nmongodb|opcounters|command;\nmongodb|metrics|repl|apply|ops;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|opcounters|query;\nservice_name|opcounters|insert;\nservice_name|opcounters|update;\nservice_name|opcounters|delete;\nservice_name|opcounters|getmore;\nservice_name|opcounters|command;\nservice_name|metrics|repl|apply|ops;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1368,7 +1368,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|metrics|document|inserted;\nmongodb|metrics|document|updated;\nmongodb|metrics|document|deleted;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|metrics|document|inserted;\nservice_name|metrics|document|updated;\nservice_name|metrics|document|deleted;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1473,7 +1473,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "reg(mongodb\\|metrics\\|commands\\|.*\\|total$)\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "reg(service_name\\|metrics\\|commands\\|.*\\|total$)\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{field3}}",
@@ -1578,7 +1578,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "reg(mongodb\\|wiredTiger\\|cursor\\|.*)\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "reg(service_name\\|wiredTiger\\|cursor\\|.*)\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -1678,7 +1678,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|metrics|queryExecutor|scanned;\nmongodb|metrics|queryExecutor|scannedObjects;\nmongodb|metrics|record|moves;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|metrics|queryExecutor|scanned;\nservice_name|metrics|queryExecutor|scannedObjects;\nservice_name|metrics|record|moves;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -1778,7 +1778,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|locks|Database|acquireCount|W;\nmongodb|locks|Collection|acquireCount|W;\nmongodb|locks|Global|acquireCount|W;\nmongodb|locks|Global|acquireCount|w;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|locks|Database|acquireCount|W;\nservice_name|locks|Collection|acquireCount|W;\nservice_name|locks|Global|acquireCount|W;\nservice_name|locks|Global|acquireCount|w;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{field2}} {{field4}}",
@@ -1864,7 +1864,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|locks|Database|acquireWaitCount|W;\nmongodb|locks|Collection|acquireWaitCount|W;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|locks|Database|acquireWaitCount|W;\nservice_name|locks|Collection|acquireWaitCount|W;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{field2}}|{{field4}}",
@@ -1964,7 +1964,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|globalLock|currentQueue|total;\nmongodb|globalLock|currentQueue|writers;\nmongodb|globalLock|currentQueue|readers;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|globalLock|currentQueue|total;\nservice_name|globalLock|currentQueue|writers;\nservice_name|globalLock|currentQueue|readers;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2050,7 +2050,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|globalLock|currentQueue|total;\nmongodb|globalLock|currentQueue|readers;\nmongodb|globalLock|currentQueue|writers;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|globalLock|currentQueue|total;\nservice_name|globalLock|currentQueue|readers;\nservice_name|globalLock|currentQueue|writers;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{field3}}",
@@ -2136,7 +2136,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|globalLock|activeClients|total;\nmongodb|globalLock|activeClients|writers;\nmongodb|globalLock|activeClients|readers;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|globalLock|activeClients|total;\nservice_name|globalLock|activeClients|writers;\nservice_name|globalLock|activeClients|readers;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2236,7 +2236,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|concurrentTransactions|write|available;\nmongodb|wiredTiger|concurrentTransactions|write|out;\nmongodb|wiredTiger|concurrentTransactions|read|available;\nmongodb|wiredTiger|concurrentTransactions|read|out;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|concurrentTransactions|write|available;\nservice_name|wiredTiger|concurrentTransactions|write|out;\nservice_name|wiredTiger|concurrentTransactions|read|available;\nservice_name|wiredTiger|concurrentTransactions|read|out;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{field3}}|{{name}}",
@@ -2322,7 +2322,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|transaction|transactions committed;\nmongodb|wiredTiger|transaction|transactions rolled back;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|transaction|transactions committed;\nservice_name|wiredTiger|transaction|transactions rolled back;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2408,7 +2408,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|transaction|transaction checkpoint scrub time (msecs);\nmongodb|wiredTiger|transaction|transaction checkpoint max time (msecs);\nmongodb|wiredTiger|transaction|transaction checkpoint total time (msecs);\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|transaction|transaction checkpoint scrub time (msecs);\nservice_name|wiredTiger|transaction|transaction checkpoint max time (msecs);\nservice_name|wiredTiger|transaction|transaction checkpoint total time (msecs);\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2503,7 +2503,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|metrics|commands|splitVector|total;\nmongodb|metrics|commands|splitVector|failed;\nmongodb|metrics|commands|splitChunk|total;\nmongodb|metrics|commands|splitChunk|failed;\nmongodb|metrics|commands|moveChunk|total;\nmongodb|metrics|commands|moveChunk|failed;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|metrics|commands|splitVector|total;\nservice_name|metrics|commands|splitVector|failed;\nservice_name|metrics|commands|splitChunk|total;\nservice_name|metrics|commands|splitChunk|failed;\nservice_name|metrics|commands|moveChunk|total;\nservice_name|metrics|commands|moveChunk|failed;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{field3}}|{{name}}",
@@ -2603,7 +2603,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|bytes read into cache;\nmongodb|wiredTiger|cache|bytes written from cache;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|bytes read into cache;\nservice_name|wiredTiger|cache|bytes written from cache;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2689,7 +2689,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|eviction server evicting pages;\nmongodb|wiredTiger|cache|eviction worker thread evicting pages;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|eviction server evicting pages;\nservice_name|wiredTiger|cache|eviction worker thread evicting pages;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2775,7 +2775,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|cache|pages read into cache;\nmongodb|wiredTiger|cache|pages written from cache;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|cache|pages read into cache;\nservice_name|wiredTiger|cache|pages written from cache;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2875,7 +2875,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|log|log bytes written\n[arrayDiff($1)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|log|log bytes written\n[arrayDiff($1)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -2961,7 +2961,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|log|log records compressed;\nmongodb|wiredTiger|log|log records not compressed;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|log|log records compressed;\nservice_name|wiredTiger|log|log records not compressed;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3047,7 +3047,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|log|log write operations;\nmongodb|wiredTiger|log|log flush operations;\nmongodb|wiredTiger|log|log sync operations;\nmongodb|wiredTiger|log|log scan operations;\nmongodb|wiredTiger|log|log force write operations;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|log|log write operations;\nservice_name|wiredTiger|log|log flush operations;\nservice_name|wiredTiger|log|log sync operations;\nservice_name|wiredTiger|log|log scan operations;\nservice_name|wiredTiger|log|log force write operations;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3147,7 +3147,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|thread-yield|application thread time evicting (usecs);\nmongodb|wiredTiger|thread-yield|application thread time waiting for cache (usecs);\nmongodb|wiredTiger|thread-yield|page acquire time sleeping (usecs);\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|thread-yield|application thread time evicting (usecs);\nservice_name|wiredTiger|thread-yield|application thread time waiting for cache (usecs);\nservice_name|wiredTiger|thread-yield|page acquire time sleeping (usecs);\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3233,7 +3233,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|thread-yield|page acquire busy blocked;\nmongodb|wiredTiger|thread-yield|page acquire eviction blocked;\nmongodb|wiredTiger|thread-yield|page acquire locked blocked;\nmongodb|wiredTiger|thread-yield|page acquire read blocked;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|thread-yield|page acquire busy blocked;\nservice_name|wiredTiger|thread-yield|page acquire eviction blocked;\nservice_name|wiredTiger|thread-yield|page acquire locked blocked;\nservice_name|wiredTiger|thread-yield|page acquire read blocked;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3333,7 +3333,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|block-manager|bytes read;\nmongodb|wiredTiger|block-manager|bytes written;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|block-manager|bytes read;\nservice_name|wiredTiger|block-manager|bytes written;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3419,7 +3419,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|session|open cursor count;\nmongodb|wiredTiger|session|open session count;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|session|open cursor count;\nservice_name|wiredTiger|session|open session count;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3519,7 +3519,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|connection|total read I/Os;\nmongodb|wiredTiger|connection|total write I/Os;\nmongodb|wiredTiger|connection|total fsync I/Os;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|connection|total read I/Os;\nservice_name|wiredTiger|connection|total write I/Os;\nservice_name|wiredTiger|connection|total fsync I/Os;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3605,7 +3605,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|connection|auto adjusting condition resets;\nmongodb|wiredTiger|connection|auto adjusting condition wait calls;\nmongodb|wiredTiger|connection|pthread mutex condition wait calls;\nmongodb|wiredTiger|connection|pthread mutex shared lock read-lock calls;\nmongodb|wiredTiger|connection|pthread mutex shared lock write-lock calls;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|connection|auto adjusting condition resets;\nservice_name|wiredTiger|connection|auto adjusting condition wait calls;\nservice_name|wiredTiger|connection|pthread mutex condition wait calls;\nservice_name|wiredTiger|connection|pthread mutex shared lock read-lock calls;\nservice_name|wiredTiger|connection|pthread mutex shared lock write-lock calls;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3705,7 +3705,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|connection|files currently open\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|connection|files currently open\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3791,7 +3791,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|connection|memory allocations;\nmongodb|wiredTiger|connection|memory frees;\nmongodb|wiredTiger|connection|memory re-allocations;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|connection|memory allocations;\nservice_name|wiredTiger|connection|memory frees;\nservice_name|wiredTiger|connection|memory re-allocations;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3891,7 +3891,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|block-manager|blocks pre-loaded;\nmongodb|wiredTiger|block-manager|blocks read;\nmongodb|wiredTiger|block-manager|blocks written;\nmongodb|wiredTiger|block-manager|mapped blocks read;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|block-manager|blocks pre-loaded;\nservice_name|wiredTiger|block-manager|blocks read;\nservice_name|wiredTiger|block-manager|blocks written;\nservice_name|wiredTiger|block-manager|mapped blocks read;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -3977,7 +3977,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|block-manager|bytes written for checkpoint;\nmongodb|wiredTiger|block-manager|bytes read;\nmongodb|wiredTiger|block-manager|bytes written;\nmongodb|wiredTiger|block-manager|mapped bytes read;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|block-manager|bytes written for checkpoint;\nservice_name|wiredTiger|block-manager|bytes read;\nservice_name|wiredTiger|block-manager|bytes written;\nservice_name|wiredTiger|block-manager|mapped bytes read;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -4077,7 +4077,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|concurrentTransactions|write|available;\nmongodb|wiredTiger|concurrentTransactions|read|available;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|concurrentTransactions|write|available;\nservice_name|wiredTiger|concurrentTransactions|read|available;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{field3}}|{{name}}",
@@ -4163,7 +4163,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb|wiredTiger|thread-state|active filesystem fsync calls;\nmongodb|wiredTiger|thread-state|active filesystem read calls;\nmongodb|wiredTiger|thread-state|active filesystem write calls;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+          "expr": "service_name|wiredTiger|thread-state|active filesystem fsync calls;\nservice_name|wiredTiger|thread-state|active filesystem read calls;\nservice_name|wiredTiger|thread-state|active filesystem write calls;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}}",
@@ -4258,14 +4258,14 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|reconciliation|fast-path pages deleted;\nmongodb|wiredTiger|reconciliation|pages deleted;\nmongodb|wiredTiger|reconciliation|page reconciliation calls;\nmongodb|wiredTiger|reconciliation|page reconciliation calls for eviction;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|reconciliation|fast-path pages deleted;\nservice_name|wiredTiger|reconciliation|pages deleted;\nservice_name|wiredTiger|reconciliation|page reconciliation calls;\nservice_name|wiredTiger|reconciliation|page reconciliation calls for eviction;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "refId": "A"
             },
             {
-              "expr": "mongodb|wiredTiger|reconciliation|split objects currently awaiting free;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|reconciliation|split objects currently awaiting free;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4360,14 +4360,14 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|transaction|transaction checkpoint most recent time (msecs);\nmongodb|wiredTiger|transaction|transaction checkpoint scrub time (msecs);\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|transaction|transaction checkpoint most recent time (msecs);\nservice_name|wiredTiger|transaction|transaction checkpoint scrub time (msecs);\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "refId": "B"
             },
             {
-              "expr": "mongodb|wiredTiger|transaction|transaction checkpoint total time (msecs);\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|transaction|transaction checkpoint total time (msecs);\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4462,7 +4462,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|transaction|transactions committed;\nmongodb|wiredTiger|transaction|transactions rolled back;\nmongodb|wiredTiger|transaction|transaction sync calls;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|transaction|transactions committed;\nservice_name|wiredTiger|transaction|transactions rolled back;\nservice_name|wiredTiger|transaction|transaction sync calls;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4542,7 +4542,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|transaction|number of named snapshots created;\nmongodb|wiredTiger|transaction|number of named snapshots dropped;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|transaction|number of named snapshots created;\nservice_name|wiredTiger|transaction|number of named snapshots dropped;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4637,7 +4637,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|transaction|transaction begins;\nmongodb|wiredTiger|transaction|transaction checkpoint currently running;\nmongodb|wiredTiger|transaction|transaction checkpoints;\nmongodb|wiredTiger|transaction|transaction checkpoint generation;\nmongodb|wiredTiger|transaction|transaction checkpoint scrub dirty target;\nmongodb|wiredTiger|transaction|transaction checkpoints skipped because database was clean;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|transaction|transaction begins;\nservice_name|wiredTiger|transaction|transaction checkpoint currently running;\nservice_name|wiredTiger|transaction|transaction checkpoints;\nservice_name|wiredTiger|transaction|transaction checkpoint generation;\nservice_name|wiredTiger|transaction|transaction checkpoint scrub dirty target;\nservice_name|wiredTiger|transaction|transaction checkpoints skipped because database was clean;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4717,7 +4717,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|transaction|transaction range of IDs currently pinned;\nmongodb|wiredTiger|transaction|transaction range of IDs currently pinned by a checkpoint;\nmongodb|wiredTiger|transaction|transaction range of IDs currently pinned by named snapshots;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|transaction|transaction range of IDs currently pinned;\nservice_name|wiredTiger|transaction|transaction range of IDs currently pinned by a checkpoint;\nservice_name|wiredTiger|transaction|transaction range of IDs currently pinned by named snapshots;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4812,7 +4812,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|busy returns attempting to switch slots;\nmongodb|wiredTiger|log|consolidated slot closures;\nmongodb|wiredTiger|log|consolidated slot join active slot closed;\nmongodb|wiredTiger|log|consolidated slot join races;\nmongodb|wiredTiger|log|consolidated slot join transitions;\nmongodb|wiredTiger|log|consolidated slot joins;\nmongodb|wiredTiger|log|consolidated slot transitions unable to find free slot;\nmongodb|wiredTiger|log|consolidated slot unbuffered writes;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|busy returns attempting to switch slots;\nservice_name|wiredTiger|log|consolidated slot closures;\nservice_name|wiredTiger|log|consolidated slot join active slot closed;\nservice_name|wiredTiger|log|consolidated slot join races;\nservice_name|wiredTiger|log|consolidated slot join transitions;\nservice_name|wiredTiger|log|consolidated slot joins;\nservice_name|wiredTiger|log|consolidated slot transitions unable to find free slot;\nservice_name|wiredTiger|log|consolidated slot unbuffered writes;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4892,14 +4892,14 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|data-handle|connection sweep candidate became referenced;\nmongodb|wiredTiger|data-handle|connection sweep dhandles closed;\nmongodb|wiredTiger|data-handle|connection sweep dhandles removed from hash list;\nmongodb|wiredTiger|data-handle|connection sweep time-of-death sets;\nmongodb|wiredTiger|data-handle|connection sweeps;\nmongodb|wiredTiger|data-handle|session dhandles swept;\nmongodb|wiredTiger|data-handle|session sweep attempts;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|data-handle|connection sweep candidate became referenced;\nservice_name|wiredTiger|data-handle|connection sweep dhandles closed;\nservice_name|wiredTiger|data-handle|connection sweep dhandles removed from hash list;\nservice_name|wiredTiger|data-handle|connection sweep time-of-death sets;\nservice_name|wiredTiger|data-handle|connection sweeps;\nservice_name|wiredTiger|data-handle|session dhandles swept;\nservice_name|wiredTiger|data-handle|session sweep attempts;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "refId": "A"
             },
             {
-              "expr": "mongodb|wiredTiger|data-handle|connection data handles currently active;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|data-handle|connection data handles currently active;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -4994,7 +4994,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|log scan records requiring two reads;\nmongodb|wiredTiger|log|log server thread advances write LSN;\nmongodb|wiredTiger|log|log server thread write LSN walk skipped;\nmongodb|wiredTiger|log|log force write operations skipped;\nmongodb|wiredTiger|log|log force write operations;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|log scan records requiring two reads;\nservice_name|wiredTiger|log|log server thread advances write LSN;\nservice_name|wiredTiger|log|log server thread write LSN walk skipped;\nservice_name|wiredTiger|log|log force write operations skipped;\nservice_name|wiredTiger|log|log force write operations;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5074,7 +5074,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|log force write operations;\nmongodb|wiredTiger|log|log flush operations;\nmongodb|wiredTiger|log|log scan operations;\nmongodb|wiredTiger|log|log flush operations;\nmongodb|wiredTiger|log|log sync operations;\nmongodb|wiredTiger|log|log write operations;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|log force write operations;\nservice_name|wiredTiger|log|log flush operations;\nservice_name|wiredTiger|log|log scan operations;\nservice_name|wiredTiger|log|log flush operations;\nservice_name|wiredTiger|log|log sync operations;\nservice_name|wiredTiger|log|log write operations;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5169,7 +5169,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|log records compressed;\nmongodb|wiredTiger|log|log records not compressed;\nmongodb|wiredTiger|log|log records too small to compress;\nmongodb|wiredTiger|log|records processed by log scan;\nmongodb|wiredTiger|log|written slots coalesced;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|log records compressed;\nservice_name|wiredTiger|log|log records not compressed;\nservice_name|wiredTiger|log|log records too small to compress;\nservice_name|wiredTiger|log|records processed by log scan;\nservice_name|wiredTiger|log|written slots coalesced;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5249,7 +5249,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|log sync time duration (usecs);\nmongodb|wiredTiger|log|log sync_dir time duration (usecs);\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|log sync time duration (usecs);\nservice_name|wiredTiger|log|log sync_dir time duration (usecs);\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5344,7 +5344,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|log bytes written;\nmongodb|wiredTiger|log|log bytes of payload data;\nmongodb|wiredTiger|log|logging bytes consolidated;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|log bytes written;\nservice_name|wiredTiger|log|log bytes of payload data;\nservice_name|wiredTiger|log|logging bytes consolidated;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5424,7 +5424,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|log files manually zero-filled;\nmongodb|wiredTiger|log|number of pre-allocated log files to create;\nmongodb|wiredTiger|log|pre-allocated log files not ready and missed;\nmongodb|wiredTiger|log|pre-allocated log files prepared;\nmongodb|wiredTiger|log|pre-allocated log files used;\nmongodb|wiredTiger|log|yields waiting for previous log file close;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|log files manually zero-filled;\nservice_name|wiredTiger|log|number of pre-allocated log files to create;\nservice_name|wiredTiger|log|pre-allocated log files not ready and missed;\nservice_name|wiredTiger|log|pre-allocated log files prepared;\nservice_name|wiredTiger|log|pre-allocated log files used;\nservice_name|wiredTiger|log|yields waiting for previous log file close;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5519,7 +5519,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|total in-memory size of compressed records;\nmongodb|wiredTiger|log|total log buffer size;\nmongodb|wiredTiger|log|total size of compressed records;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|total in-memory size of compressed records;\nservice_name|wiredTiger|log|total log buffer size;\nservice_name|wiredTiger|log|total size of compressed records;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5599,7 +5599,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|log|yields waiting for previous log file close\n[arrayDiff($1)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|log|yields waiting for previous log file close\n[arrayDiff($1)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{name}}",
@@ -5694,7 +5694,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|lock|checkpoint lock acquisitions;\nmongodb|wiredTiger|lock|metadata lock acquisitions;\nmongodb|wiredTiger|lock|schema lock acquisitions;\nmongodb|wiredTiger|lock|table lock acquisitions;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|lock|checkpoint lock acquisitions;\nservice_name|wiredTiger|lock|metadata lock acquisitions;\nservice_name|wiredTiger|lock|schema lock acquisitions;\nservice_name|wiredTiger|lock|table lock acquisitions;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5774,7 +5774,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|lock|checkpoint lock application thread wait time (usecs);\nmongodb|wiredTiger|lock|checkpoint lock internal thread wait time (usecs);\nmongodb|wiredTiger|lock|handle-list lock eviction thread wait time (usecs);\nmongodb|wiredTiger|lock|metadata lock application thread wait time (usecs);\nmongodb|wiredTiger|lock|metadata lock internal thread wait time (usecs);\nmongodb|wiredTiger|lock|schema lock application thread wait time (usecs);\nmongodb|wiredTiger|lock|schema lock internal thread wait time (usecs);\nmongodb|wiredTiger|lock|table lock application thread time waiting for the table lock (usecs);\nmongodb|wiredTiger|lock|table lock internal thread time waiting for the table lock (usecs)\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|lock|checkpoint lock application thread wait time (usecs);\nservice_name|wiredTiger|lock|checkpoint lock internal thread wait time (usecs);\nservice_name|wiredTiger|lock|handle-list lock eviction thread wait time (usecs);\nservice_name|wiredTiger|lock|metadata lock application thread wait time (usecs);\nservice_name|wiredTiger|lock|metadata lock internal thread wait time (usecs);\nservice_name|wiredTiger|lock|schema lock application thread wait time (usecs);\nservice_name|wiredTiger|lock|schema lock internal thread wait time (usecs);\nservice_name|wiredTiger|lock|table lock application thread time waiting for the table lock (usecs);\nservice_name|wiredTiger|lock|table lock internal thread time waiting for the table lock (usecs)\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5869,14 +5869,14 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|session|table alter successful calls;\nmongodb|wiredTiger|session|table compact successful calls;\nmongodb|wiredTiger|session|table create successful calls;\nmongodb|wiredTiger|session|table drop successful calls;\nmongodb|wiredTiger|session|table rebalance successful calls;\nmongodb|wiredTiger|session|table rename successful calls;\nmongodb|wiredTiger|session|table salvage successful calls;\nmongodb|wiredTiger|session|table truncate successful calls;\nmongodb|wiredTiger|session|table verify successful calls;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|session|table alter successful calls;\nservice_name|wiredTiger|session|table compact successful calls;\nservice_name|wiredTiger|session|table create successful calls;\nservice_name|wiredTiger|session|table drop successful calls;\nservice_name|wiredTiger|session|table rebalance successful calls;\nservice_name|wiredTiger|session|table rename successful calls;\nservice_name|wiredTiger|session|table salvage successful calls;\nservice_name|wiredTiger|session|table truncate successful calls;\nservice_name|wiredTiger|session|table verify successful calls;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "refId": "A"
             },
             {
-              "expr": "mongodb|wiredTiger|session|open cursor count;\nmongodb|wiredTiger|session|open session count;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|session|open cursor count;\nservice_name|wiredTiger|session|open session count;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -5956,7 +5956,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|session|table alter unchanged and skipped;\nmongodb|wiredTiger|session|table compact failed calls;\nmongodb|wiredTiger|session|table create failed calls;\nmongodb|wiredTiger|session|table drop failed calls;\nmongodb|wiredTiger|session|table rebalance failed calls;\nmongodb|wiredTiger|session|table rename failed calls;\nmongodb|wiredTiger|session|table salvage failed calls;\nmongodb|wiredTiger|session|table truncate failed calls;\nmongodb|wiredTiger|session|table verify failed calls;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|session|table alter unchanged and skipped;\nservice_name|wiredTiger|session|table compact failed calls;\nservice_name|wiredTiger|session|table create failed calls;\nservice_name|wiredTiger|session|table drop failed calls;\nservice_name|wiredTiger|session|table rebalance failed calls;\nservice_name|wiredTiger|session|table rename failed calls;\nservice_name|wiredTiger|session|table salvage failed calls;\nservice_name|wiredTiger|session|table truncate failed calls;\nservice_name|wiredTiger|session|table verify failed calls;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -6051,7 +6051,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|application threads page read from disk to cache count;\nmongodb|wiredTiger|cache|application threads page write from cache to disk count;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|application threads page read from disk to cache count;\nservice_name|wiredTiger|cache|application threads page write from cache to disk count;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -6131,7 +6131,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|application threads page read from disk to cache time (usecs);\nmongodb|wiredTiger|cache|application threads page write from cache to disk time (usecs);\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|application threads page read from disk to cache time (usecs);\nservice_name|wiredTiger|cache|application threads page write from cache to disk time (usecs);\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{name}}",
@@ -6226,7 +6226,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|pages queued for eviction;\nmongodb|wiredTiger|cache|pages read into cache;\nmongodb|wiredTiger|cache|pages requested from the cache;\nmongodb|wiredTiger|cache|pages written from cache;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|pages queued for eviction;\nservice_name|wiredTiger|cache|pages read into cache;\nservice_name|wiredTiger|cache|pages requested from the cache;\nservice_name|wiredTiger|cache|pages written from cache;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{name}}",
@@ -6321,7 +6321,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|bytes read into cache;\nmongodb|wiredTiger|block-manager|bytes read;\nmongbdo|wiredTiger|cache|bytes written from cache;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|bytes read into cache;\nservice_name|wiredTiger|block-manager|bytes read;\nmongbdo|wiredTiger|cache|bytes written from cache;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{name}}",
@@ -6416,7 +6416,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|checkpoint blocked page eviction;\nmongodb|wiredTiger|cache|eviction server evicting pages;\nmongodb|wiredTiger|cache|eviction worker thread evicting pages;\nmongodb|wiredTiger|cache|modified pages evicted by application threads;\nmongodb|wiredTiger|cache|unmodified pages evicted;\nmongodb|wiredTiger|cache|modified pages evicted;\nmongodb|wiredTiger|cache|internal pages evicted;\nmongodb|wiredTiger|cache|pages evicted because they had chains of deleted items;\nmongodb|wiredTiger|cache|pages evicted because they exceeded the in-memory maximum;\n[arrayDiff($0)]\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|checkpoint blocked page eviction;\nservice_name|wiredTiger|cache|eviction server evicting pages;\nservice_name|wiredTiger|cache|eviction worker thread evicting pages;\nservice_name|wiredTiger|cache|modified pages evicted by application threads;\nservice_name|wiredTiger|cache|unmodified pages evicted;\nservice_name|wiredTiger|cache|modified pages evicted;\nservice_name|wiredTiger|cache|internal pages evicted;\nservice_name|wiredTiger|cache|pages evicted because they had chains of deleted items;\nservice_name|wiredTiger|cache|pages evicted because they exceeded the in-memory maximum;\n[arrayDiff($0)]\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{name}}",
@@ -6511,7 +6511,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|maximum page size at eviction\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|maximum page size at eviction\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -6591,7 +6591,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|pages currently held in the cache;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|pages currently held in the cache;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -6686,7 +6686,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|bytes belonging to page images in the cache;\nmongodb|wiredTiger|cache|bytes not belonging to page images in the cache;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|bytes belonging to page images in the cache;\nservice_name|wiredTiger|cache|bytes not belonging to page images in the cache;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -6766,7 +6766,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mongodb|wiredTiger|cache|eviction worker thread active;\nmongodb|wiredTiger|cache|eviction worker thread stable number;\n{hostId=$mongodb_cluster,host=$mongodb_instance,filter=$filter}",
+              "expr": "service_name|wiredTiger|cache|eviction worker thread active;\nservice_name|wiredTiger|cache|eviction worker thread stable number;\n{hostId=$service_name_cluster,host=$service_name_instance,filter=$filter}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -6819,7 +6819,7 @@
   "schemaVersion": 18,
   "style": "dark",
   "tags": [
-    "MongoDB"
+    "service_name"
   ],
   "templating": {
     "list": [
@@ -6833,11 +6833,11 @@
         "definition": "",
         "hide": 0,
         "includeAll": false,
-        "label": "mongodb_sharding",
+        "label": "service_name_sharding",
         "multi": false,
-        "name": "mongodb_sharding",
+        "name": "service_name_sharding",
         "options": [],
-        "query": "label_values(mongodb_sharding{all{hid=0, pid=0}},mongodb_sharding)",
+        "query": "label_values(service_name_sharding{all{hid=0, pid=0}},service_name_sharding)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -6851,18 +6851,18 @@
       {
         "allValue": null,
         "current": {
-          "text": "mongodb{hid=1, pid=0}",
-          "value": "mongodb{hid=1, pid=0}"
+          "text": "service_name{hid=1, pid=0}",
+          "value": "service_name{hid=1, pid=0}"
         },
         "datasource": "Infinsight",
         "definition": "",
         "hide": 0,
         "includeAll": false,
-        "label": "mongodb_cluster",
+        "label": "service_name_cluster",
         "multi": false,
-        "name": "mongodb_cluster",
+        "name": "service_name_cluster",
         "options": [],
-        "query": "label_values(mongodb_cluster{$mongodb_sharding},mongodb_cluster)",
+        "query": "label_values(service_name_cluster{$service_name_sharding},service_name_cluster)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -6883,11 +6883,11 @@
         "definition": "",
         "hide": 0,
         "includeAll": false,
-        "label": "mongodb_instance",
+        "label": "service_name_instance",
         "multi": false,
-        "name": "mongodb_instance",
+        "name": "service_name_instance",
         "options": [],
-        "query": "label_values(mongodb_instance{$mongodb_cluster},mongodb_instance)",
+        "query": "label_values(service_name_instance{$service_name_cluster},service_name_instance)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -6958,7 +6958,7 @@
     ]
   },
   "timezone": "",
-  "title": "MongoDB Second Level Monitoring",
+  "title": "service_name Monitoring",
   "uid": "yLIx_jCmz",
   "version": 4
 }

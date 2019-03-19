@@ -260,6 +260,5 @@ rm -f bin/*_server
 # 4.6 Copy start and stop script
 cp script/start_inspector.sh $DeployDir/
 cp script/stop_inspector.sh $DeployDir/
-cp -r script/grafana_template/ $DeployDir/
-cp -r script/mongodb/ $DeployDir/
+cp -r script/service_template/ $DeployDir/
 
