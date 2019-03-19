@@ -81,7 +81,7 @@ func (sp *StepParse) DoStep(input interface{}, params ...interface{}) (interface
 		sp.Id, sp.Instance.Addr, sp.Instance.DBType)
 
 	// update metric
-	metric.GetMetric(util.Mongo).AddStepCount(sp.Id)
+	metric.GetMetric(sp.ServiceName).AddStepCount(sp.Id)
 
 	// callback
 	sp.mp = make(map[int]interface{}) // regenerate every time
@@ -107,7 +107,7 @@ func (sp *StepParse) DoStep(input interface{}, params ...interface{}) (interface
 			return sp.mp, err // still return empty map if error happens
 		}
 	}
-	metric.GetMetric(util.Mongo).AddBytesGet(totLen) // metric
+	metric.GetMetric(sp.ServiceName).AddBytesGet(totLen) // metric
 
 	// glog.V(2).Infof("Step[%s] instance-name[%s] mp[%v]", sp.Id, sp.InstanceName, mp)
 	return sp.mp, nil
