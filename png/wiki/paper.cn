@@ -1,0 +1,204 @@
+# 总体架构
+
+## 内部结构
+
+![](https://github.com/aliyun/infinsight/raw/develop/doc/constructure.png)
+
+Infinsight服务总体分为以下几个部分：
+
+* API Server：响应用户请求，处理数据的整合、计算、抽样、格式化输出等任务，提供统一的用户访问接口
+* Store Server：监控数据的数据缓存与持久化存储，对API Server和Collector Server提供统一的时序存储服务
+* Collector Server：服务信息的采集，缓存，预计算和数据推送功能
+* StoreDB：分布式持久化存储服务，目前使用MongoDB
+* Config Server：分布式配置管理服务。目前Config Server并没有直接使用ZooKeeper或ETCD，而是在MongoDB之上自行研发了一套配置管理服务。Config Server虽然在逻辑结构上属于独立进程，但从实际实现上，Config Server只是安插在API Server、Store Server和Collector Server中的本地库
+* 说明：内部结构中，API Server、Store Server和Collector Server都是由多个进程组成的服务集合
+
+## 外部依赖
+Infinsight是一个面向为服务的无agent监控系统，所以依赖于目标服务提供state接口，如：命令行接口、clieht接口、http接口等
+
+## 组件介绍
+
+![](https://github.com/aliyun/infinsight/raw/develop/doc/components.jpeg)
+
+如架构图所示，Inspector主要分为三个服务单元，每个服务单元中又细分成多个组件，其中：
+
+* 灰色，为通信组件，负责数据的服务监听，数据传输，失败重传，压力控制等工作。
+* 蓝色，为存储组件，负责系统不同层次不通内容的缓存，提升系统性能，降低数据库访问压力。
+* 红色，为计算组件，负责系统不同层次的计算、抽象、统计、过滤等工作。
+* 绿色，为序列化组件，负责数据在存储或传输前的压缩工作，以及在进行计算前的解压缩工作。
+* 粉色，为服务接口组件，提供对外数据访问能力，直接响应用户的请求。
+* 黄色，为高可用管理组件，负责服务的心跳、任务分布与缓存分布管理，保证系统的高可用。
+
+### API Server
+
+#### API Server组件介绍
+* API Proxy：Http Server，响应用户的数据请求
+* Depress：数据解压缩
+* Pointer Merge：将Store Server和Collector Server中的数据进行合并
+* Point Compute：进行展示相关数据的最终计算工作，例如：四则运算、计算delta等
+* Point Filter：对Cache获取的数据进行剪裁与抽样，提取出满足条件的时间范围和数据精度
+* Grafana：提供用户可视化界面展示
+
+#### API Server 核心设计
+Api主要负责数据的查询，基本查询过程如下：
+
+1. 从Collector Server中获取数据（ProtoBuf协议）
+2. 从Store Server中获取数据（ProtoBuf协议）
+3. 将Collector Server中的数据与Store Server中的数据进行解压缩与合并
+4. 对合并的数据二次计算
+5. 对计算后的数据进行过滤
+6. 对过滤后的数据进行格式化输出（Prometheus协议：https://prometheus.io/docs/prometheus/latest/querying/api/，Range queries协议）
+
+#### 数据获取过程
+1. 对用户请求的实例ID计算一致性hash，可知数据是由哪个Collector Server抓取，由哪个Store Server存储
+2. 通过heartbeat服务，获取到对应Collector Server和Store Server的IP:Port信息，并通过protobuf协议分别请求Collector Server中近期的数据，以及Store Server上的持久化数据
+
+* 说明：
+
+	如果有1台Collector Server挂掉，那么由于heartbeat探活，所以一段时间（目前设置为10秒）之内，其他Collector Server会接管这个挂掉的Collector Server的工作，API也会对应的通过存活的Collector Server计算一致性hash。
+
+	但是，对于Store Server来说，由于Store Server要确保数据的连续可靠性，所以目前即使Store Server以外挂掉，也不能由其他Store Server来分摊它的工作，此时会导致部分数据无法获取，直到这个Store Server正常工作，服务才能恢复。
+	
+#### 数据计算过程
+API Server获取到的数据，形式上为“数组”，所以数据计算的过程主要就是针对如何对数组进行计算的过程。目前支持对监控数据进行以下4种形式的计算：
+
+* 数组与数组的四则运算（包含“模”运算）：输入两个数组，返回一个数组
+* 数组与数值的四则运算（包含“模”运算，前置数据类型必须是数组）：输入一个数据和一个数字，返回一个数组
+* 数组的差值运算：输入一个数组，返回一个数组
+* 数组的聚合运算（目前只支持sum）：输入一个数组，返回一个数字
+
+语法形式为：[functionName(paramList)]，即在一般程序设计语言中的“不定长函数调用”的外边，加一对方括号。
+
+参数列表有两种形式：1. $n；2. 数字。其中$n表示第n个监控指标的返回数据，从1开始数起；数字，就代表数字本身。（$0表示所有监控项目的监控数据所组成的数组，$0一般只有在差值运算时才会使用，属于一种对于每个数组依次做差值的优化）
+
+具体的解析和计算过程，详见代码：src/inspector/api_server/syntax/parser\_test.go
+
+#### 数据采样过程
+数据过滤即将原始数据，基于一定的规则，进行采样，并返回采样后的数据，目前提供两种采样方法：
+
+1. 定点采样：根据用户指定的数据步长（如1min），每一个步长进行一次采样，确保所有数据的距离都是相等步长
+2. 极值点采样：在两个步长区间，获取极大值和极小值点，并以这两个点作为两个步长区间的采样点
+
+具体采样过程，详见代码：src/inspector/api_server/filter/filter_test.go
+
+### Store Server
+
+#### Store Server 模块介绍
+* Data Handler：响应的存储请求，对数据进行缓存与持久化存储
+* TimeCache：基于定长时间压缩数据的数据缓存
+* StoreDB：数据持久化存储，目前使用MongoDB进行存储
+
+#### TimeCache设计
+TimeCache是Store Server中的核心Cache结构，用于保存最近一段时间的监控数据。
+
+TImeCache设计的核心思想为以下两点：
+
+* 提高数据的存储效率，避免过多的管理开销
+* 数据按时间高效的自然淘汰
+
+#### TimeCache核心数据结构
+![](https://github.com/aliyun/infinsight/raw/develop/doc/timecache.png)
+
+TimeCache采用“分级”+“多级索引”的形式进行存储：
+
+1. concurrency bucket：将不同实例的数据按照hash进行分桶，不同分桶之间的数据相互隔离，从而降低锁对性能的影响，提高性能
+2. InstanceMap：每个分桶内都有一个实例的Map结构，记录着不同实例在最近一段时间的数据
+3. TimeLevel：对于每个实例，数据的存储分为不同Level，Level的含义为“时间对齐”的连续数据。时间对齐的概念指的是：由于Store Server只存储以某个固定的时间范围的数据，而这些数据范围之间没有重叠也没有间隔，即为“时间对齐”。例如，某条数据为12:38:23-12:39:22这一分钟的连续数据，那么12:39:23-12:40:22这个下一分的数据，与上一条数据为“时间对齐”的数据。在系统运行良好的情况下，TimeLevel的数量只有可能为1个，但当Collector Server以外重启后，新发送的数据与之前的数据无法对齐。没有“时间对齐”的数据，TimeCache是无法进行存储的。
+4. DataCache：每个TimeLevel都包含一个DataCache，DataCache本质上为块存储结构，分为Index部分和Data部分：
+	1. Index部分为二级索引结构，由“块号”、“块内偏移”和“数据长度”组成。index组成一个ring cache，相邻的index为时间对齐的相邻数据的索引。
+	2. Data部分为存储块，主要用于数据存储，并有两个变量进行管理：最后数据写入点，块空闲率
+
+### Collector Server
+
+#### Collector Server 模块介绍
+* Collector：与Target Server通信，获取服务信息。一个Collector Server中会有N个collector，每个collector定期抓取一个指定目标数据库进程，所以对N个服务进程进行监控，就需要N个collector。
+* Pre Compute：对数据进行预计算，生成虚拟采集信息，生成虚拟节点。（尚未开发）
+* Data Subscribe：制定触发规则，注册回调接口。根据预计算的结果与用户的触发条件，进行数据触发。（尚未开发）
+* Ring Cache：缓存本地collector抓取的实时数据，定期进行压缩存储，避免无用数据实时向存储服务请求存储，消耗存储服务的资源。
+* Compress​：在发送到Store Server之前，对一段时间的定长数据进行数据压缩。
+
+#### Collector Server 核心功能
+1. 监听用户配置，根据用户配置实时生成新的任务，或删除老的任务
+2. 监听不同类型服务的元数据库，并实时更新任务列表
+3. 在分布式环境下，进行选主和统一任务分配
+4. 以秒为粒度对每个任务进行监控数据采集
+5. 提供最近1-2分钟的监控数据查询
+6. 将最新1分钟数据进行压缩，发送给Store Server进行持久化存储
+7. 自适应监控数据的变化，随着监控数据的格式变化，自动生成新的监控指标
+
+#### Collector Server 详细设计
+Collector Server内部组织结构分为两部分：
+
+1. 服务架构和基础服务
+	1. 协程池：避免每次服务运行时协程的重新创建和释放
+	2. 调度器：基于TCB(Task Control Block)保存每个Task的信息，并确保每秒对任务进行一次调度
+	3. 任务流：workflow(任务流)的主要作用即对业务流程进行拆解，一个workflow由多个step组成，每个step执行业务流程的一部分。
+	4. workflow通过注册进TCB，借助调度器执行调度。所以workflow和step可以看作是对任务与结构的结偶，并且确保任务的可测试性
+2. 业务流程
+	1. 采集：通过client访问对应服务，获取监控数据
+	2. 解析：将获取的监控数据进行解析，抽取需要的数据
+	3. 存储：将解析的数据，存入内部数据结构(ring cache)，并进行时间误差的处理
+	4. 压缩：将一批（1分钟）数据进行压缩
+	5. 发送：将压缩的数据发送到Store Server，并处理失败重发送
+
+### Infinsight压缩算法
+Infinsight根据流式数据的特点，采用了三种压缩方法：
+
+1. 长key压缩
+2. 定值数值压缩
+3. 可变数值压缩
+
+Infinsight的压缩过程设计，相比常规的数值存储方法，有以下几个特点：
+
+1. 定义最大存储长度为2^60，并存储“空值”。通常，2^60已经满足了绝大多数的需求，但因为能够保存“空值”这一特性，也就意味着数据永远不可能出现“断点”，那么，基于连续数据的压缩，就可以做到非常高效。
+2. 采用浮点数、整数统一存储方式，将所有数值放大N倍转化为整数进行存储，不区分浮点数与整数的类型差别。虽然，由于所有数值均放大了N倍，但是由于GCD压缩方式的统一，所有倍无效放大的数值都会回归到原始数值，从而在不区分数据类型的情况下，依然可以保持较高的压缩率。
+
+#### 压缩流程
+![](https://github.com/aliyun/infinsight/raw/develop/doc/compression.jpeg)
+
+#### 长Key压缩
+长Key压缩主要针对数据监控项的存储，例如：systemInfo|voluntary context switches，由于每个实例，每分钟，都会进行一次数据存储，所以这么长的监控项本身就会占用大量的存储。为了降低监控项的存储开销，采用以下形式进行压缩：
+
+1. 从0开始计数，将每一个不同的监控项和一个数字一一对应
+2. 建立62数（26个小写字母，26个大写字母，10个数字）
+3. 将一个监控项转化为一个62进制数的字符串形式
+
+通过以上方法，我们将监控项的长key，映射为内存中的数值以及持久化存储中的62进制字符串。不仅节省了存储成本，也将key的map映射关系转化为了数组下标访问，极大的提升了查询性能。
+
+#### 定值数值压缩
+![]()
+
+定长数据压缩，采用run length encoding + varint模式
+
+run length encoding的压缩，指将n个相同的数值，变成一个数量加一个数值的形式进行存储。例如：11111存储为51
+
+varint具体算法细节，参考google protobuf的文档说明：https://developers.google.com/protocol-buffers/docs/encoding
+
+#### 可变数值压缩
+![](https://github.com/aliyun/infinsight/raw/develop/doc/fix%20compression.jpeg)
+#### Diff压缩
+Diff压缩，将第一个值原样保存，后续值通过后值减前置，将原数组变为差值数组，从而达到压缩的目的。这种压缩算法对于单调递增的数据模型，通常会有很好的压缩效果    
+#### GCD压缩
+GCD即最小公倍数，通过计算一批数据（60个）的最小公倍数，将最小共倍数单独存储，其他数据等比缩小，从而达到数据压缩的目的。最小公倍数一般情况下压缩效率并不是很理想，但是对于大整数，并且结尾由很多0的数据，压缩效果非常好。并且，最小公倍数还是一种可以调和整数压缩和浮点数压缩的方案。
+#### OD压缩
+OD即原点距离压缩，将离原点距离较近的负数变为正数，从而达到压缩的目的。OD压缩在数据中存在许多小负数的情况时，才能由很好的压缩效果，因为越小的负数，在无符号情况正数看来，其数值越大。
+
+![](https://github.com/aliyun/infinsight/raw/develop/doc/OD%20map.jpeg)
+
+
+#### Simple8B压缩
+simple8B压缩的核心思想为：
+通过一个int64存储多个int64
+使用高4bit存储低60个bit中每个数字的bit宽度，而使用低60bit存储数据
+4bit可以表示16种不同的数值，每个数值代表一种标记，每个标记有其对应的数据宽度
+selector-0为特殊标记，表示当前8字节用于指明后8字节中低60bit的数据个数。之所以会出现这种情况，是因为，并不是每个8字节的低60bit都可以存满的。比如，使用一个int64存储4个1，此时60个bit并没有占满，需要特殊处理。
+selector-1为空值标记，即专门针对空值进行处理，当flag为1是，低60个bit用于保存连续空值的数量
+映射表如图所示：
+
+![](https://github.com/aliyun/infinsight/raw/develop/doc/Simple8B%20flag%20table.jpeg)
+
+举例说明：
+如果需要保存的数值为60个1，那么对于simple8B压缩算法来说：
+数字1值需要1个bit就可以保存，所以，selector选择2
+高4bit写入数字2
+低60bit，每个bit都写入1，代表需要保存的数字1
