@@ -1,0 +1,25 @@
+db.taskList.update(
+	{ "key_unique" : "service_name" },
+	{
+		$unset : {
+			"service_name.distribute" : 1
+		}
+	}
+)
+
+db.taskList.update(
+	{ "key_unique" : "service_name" },
+	{
+		$inc : { "~key_md5" : 1 },
+		$set : {
+		}
+	}
+);
+
+db.taskList.update(
+	{ "key_unique" : "~key_md5" },
+	{
+		$inc: { "~key_md5" : 1 }
+	}
+);
+
