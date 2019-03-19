@@ -1,0 +1,362 @@
+#!/bin/bash
+
+set -u
+
+################################################################
+#
+# Environment
+#
+################################################################
+
+# command argv
+CONTROL_FILE=$0
+MODULE=$1
+COMMAND=$2
+
+# locate project workpath
+if [ "Darwin" == "$(uname -s)" ]; then
+	ENTRYFILE=`greadlink -f $CONTROL_FILE`
+else
+	ENTRYFILE=`readlink -f $CONTROL_FILE`
+fi
+
+################################################################
+# global var
+################################################################
+
+BINPATH=`dirname $ENTRYFILE`
+WORKPATH=`dirname $BINPATH`
+PROCKEEPER="hypervisor"
+DATAPATH=$WORKPATH/data
+LOGPATH=$WORKPATH/log
+TMPPATH=$WORKPATH/tmp
+
+################################################################
+# compile info
+################################################################
+product="product:dds-inspector"
+service="service:$MODULE"
+code_branch=`git symbolic-ref  -q HEAD | awk -F'/' '{print $3;}'`
+code_branch="code_branch:$code_branch"
+commit_id=`git rev-parse HEAD`
+commit_id="commit_id:$commit_id"
+go_version=`go version | awk -F' ' '{print $3;}'`
+go_version="go_version:go_version"
+build_time=`date "+%Y-%m-%d_%H:%M:%S"`
+build_time="build_time:$build_time"
+info="inspector/util.VERSION=$product;$service;$code_branch;$commit_id;$go_version;$build_time"
+
+################################################################
+# service common params
+################################################################
+
+hypervisor="$WORKPATH/bin/$PROCKEEPER"
+program="$WORKPATH/bin/$MODULE"
+data_dir="$WORKPATH/data"
+log_dir="$WORKPATH/log"
+tmp_dir="$WORKPATH/tmp"
+
+config_address="127.0.0.1:27017/admin"
+config_username="admin"
+config_password="admin"
+config_db="MonitorConfig"
+cs_interval="5"
+hb_interval="2"
+
+mongodb_address="127.0.0.1:27017/admin"
+mongodb_username="admin"
+mongodb_password="admin"
+mongodb_db="MonitorData"
+
+collector_timeout=3
+store_timeout=5
+store_read_timeout=3
+store_write_timeout=5
+
+api_server_port="6100"
+store_server_port="6200"
+collector_server_port="6300"
+api_server_profiling_port="9100"
+store_server_profiling_port="9200"
+collector_server_profiling_port="9300"
+store_monitor_port="7200"
+collector_monitor_port="7300"
+
+cache_concurrence="10"
+cache_reserve="86400"
+
+################################################################
+# inner Function
+################################################################
+
+function echo_process() {
+	echo -e "\033[33m[PROCESS] \033[0m$1\033[0m"
+}
+
+function echo_finish() {
+	echo -e "\033[32m[OK] \033[0m$1\033[0m"
+}
+
+function echo_err() {
+	echo -e "\033[31m[ERR] \033[0m$1\033[0m"
+}
+
+function echo_normal() {
+	echo -e "\033[0m$1\033[0m"
+}
+
+################################################################
+# Command Function
+################################################################
+
+function check_server() {
+	echo_normal 'check_server'
+
+	# port=$1
+	# r=`netstat -natp | fgrep $port`
+	# if [ $? -eq 0 ];then
+	# 	return 0
+	# else
+	# 	echo_err "server[$MODULE] is not running"
+	# 	exit 255
+	# fi
+
+	r=`ps -ef | fgrep -c $WORKPATH`
+	if [ $r -gt 1 ];then
+	 	echo_normal "server[$MODULE] is running"
+		return 0
+	else
+	 	echo_err "server[$MODULE] is not running"
+		exit 255
+	fi
+}
+
+function start_server() {
+	echo_normal "$MODULE start"
+
+	if [ -d $log_dir ]; then
+		rm -rf $log_dir
+	fi
+
+	mkdir -p $data_dir
+	mkdir -p $log_dir
+	mkdir -p $tmp_dir
+
+	# api server
+	if [ "x$MODULE" == "xapi_server" ];then
+		cmd="$program \
+			-config_address=$config_address \
+			-config_username=$config_username \
+			-config_password=$config_password \
+			-config_db=$config_db \
+			-cs_interval=$cs_interval \
+			-hb_interval=$hb_interval \
+			-port=$api_server_port \
+			-profiling_port=$api_server_profiling_port \
+			-collector_timeout=$collector_timeout \
+			-store_timeout=$store_timeout \
+			-stderrthreshold fatal \
+			-log_dir=$log_dir -v 2 \
+			>> $log_dir/stdout 2>>$log_dir/stderr"
+		cmd=`echo $cmd`
+		port=$api_server_port
+	fi
+
+	# store server
+	if [ "x$MODULE" == "xstore_server" ];then
+		cmd="$program \
+			-config_address=$config_address \
+			-config_username=$config_username \
+			-config_password=$config_password \
+			-config_db=$config_db \
+			-cs_interval=$cs_interval \
+			-hb_interval=$hb_interval \
+			-store_address=$mongodb_address \
+			-store_username=$mongodb_username \
+			-store_password=$mongodb_password \
+			-store_db=$mongodb_db \
+			-store_read_timeout=$store_read_timeout \
+			-store_write_timeout=$store_write_timeout \
+			-port=$store_server_port \
+			-concurrence=$cache_concurrence \
+			-reserve=$cache_reserve \
+			-monitor_port=$store_monitor_port \
+			-profiling_port=$store_server_profiling_port \
+			-stderrthreshold fatal \
+			-log_dir=$log_dir -v 2 \
+			>> $log_dir/stdout 2>>$log_dir/stderr"
+		cmd=`echo $cmd`
+		port=$store_server_port
+	fi
+
+	# collector server
+	if [ "x$MODULE" == "xcollector_server" ];then
+		cmd="$program \
+			-config_address=$config_address \
+			-config_username=$config_username \
+			-config_password=$config_password \
+			-config_db=$config_db \
+			-cs_interval=$cs_interval \
+			-hb_interval=$hb_interval \
+			-port=$collector_server_port \
+			-monitor_port=$collector_monitor_port \
+			-profiling_port=$collector_server_profiling_port \
+			-work_path=$WORKPATH
+			-log_dir=$log_dir \
+			-stderrthreshold fatal -v 1 \
+			>> $log_dir/stdout 2>>$log_dir/stderr"
+		cmd=`echo $cmd`
+		port=$collector_server_port
+	fi
+
+	# start server
+	nohup $hypervisor --exec="${cmd}" &
+	sleep 1
+	check_server
+	if [ -f $tmp_dir/$MODULE.pid ];then
+		echo "$tmp_dir/$MODULE.pid has exist"
+	else
+		echo $! > $tmp_dir/$MODULE.pid
+	fi
+}
+
+function stop_server() {
+	echo_normal "$MODULE stop"
+
+	ps -ef | fgrep api_server | awk '{print $2}'
+	hpid=`ps -ef | fgrep $hypervisor | awk '{print $2}'`
+	if [ $? -eq 0 ];then
+		pkill -9 -P $hpid
+		kill -9 $hpid
+	fi
+	pid=`ps -ef | fgrep $program | awk '{print $2}'`
+	if [ $? -eq 0 ];then
+		kill -9 $pid
+	fi
+
+	rm -f $tmp_dir/$MODULE.pid
+}
+
+function restart_server() {
+	echo 'restart_server'
+	start_server
+	stop_server
+}
+
+function info_server() {
+	echo 'info_server'
+}
+
+function build_control() {
+	cat $WORKPATH/bin/SuperControl | sed "s/^MODULE=\$1/MODULE=$MODULE/" | sed 's/^COMMAND=$2/COMMAND=$1/' > $WORKPATH/bin/control.tmp
+	mv $WORKPATH/bin/control.tmp $WORKPATH/bin/control
+	chmod +x $WORKPATH/bin/control
+}
+
+function build_server() {
+	echo_normal "$MODULE build"
+
+	export GOPATH=$WORKPATH
+
+	# 清理原服务
+	rm -f $WORKPATH/bin/$PROCKEEPER
+	rm -f $WORKPATH/bin/$MODULE
+
+	# 无论哪个模块，都要独立编译prockeeper
+	gcc -o $WORKPATH/bin/$PROCKEEPER $WORKPATH/tool/hypervisor.c
+	go build -gcflags "-N -l" -ldflags "-X $info" -o $WORKPATH/bin/$MODULE $WORKPATH/src/inspector/$MODULE/main.go
+	ret=$?
+	if [ $ret -ne 0 ];then
+		exit $ret
+	fi
+}
+
+function init_server() {
+	echo 'init_server'
+}
+
+function usage() {
+	echo -e '[Usage]: '
+	echo -e 'control module command '
+	echo -e 'command: [start / stop / restart / check / info / build / init]'
+	echo -e 'module: [api_server / store_server / collector_server]'
+	echo -e 'for example: ~/bin/control api_server start'
+}
+
+################################################################
+#
+# Execution
+#
+################################################################
+
+#===============================================================
+# Check Config
+#===============================================================
+echo_process 'Check Config'
+case $MODULE in
+	"api_server")
+		echo_normal 'module: [api_server]'
+		echo_normal "workpath: [$WORKPATH]"
+		;;
+	"store_server")
+		echo_normal 'module [store_server]'
+		echo_normal "workpath: [$WORKPATH]"
+		;;
+	"collector_server")
+		echo_normal 'module [collector_server]'
+		echo_normal "workpath: [$WORKPATH]"
+		;;
+	*)
+		echo_err "module [$MODULE] is unknown"
+		usage
+		exit -1
+		;;
+esac
+echo ''
+
+#===============================================================
+# Execute Command
+#===============================================================
+echo_process 'Execute Command'
+case $COMMAND in
+	"start")
+		echo_normal "$MODULE start"
+		start_server
+		;;
+	"stop")
+		echo_normal "$MODULE stop"
+		stop_server
+		;;
+	"restart")
+		echo_normal "$MODULE restart"
+		stop_server
+		echo_normal "$MODULE sleep 5s"
+		sleep 5
+		start_server
+		;;
+	"check")
+		echo_normal "$MODULE check"
+		;;
+	"info")
+		echo_normal "$MODULE info"
+		;;
+	"build")
+		echo_normal "$MODULE build"
+		build_server
+		;;
+	"init")
+		echo_normal "$MODULE init"
+		build_control
+		;;
+	*)
+		echo_err "command [$COMMAND] is unknown"
+		usage
+		exit -1
+		;;
+esac
+
+#===============================================================
+# Finish
+#===============================================================
+echo_finish "$COMMAND $MODULE $COMMAND"
+exit 0

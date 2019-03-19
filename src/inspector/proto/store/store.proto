@@ -1,0 +1,27 @@
+syntax="proto3";
+import "inspector/proto/core/core.proto";
+
+message StoreSaveRequest {
+	repeated Info  InfoList	 = 2;	// 需要存储的数据
+}
+
+message StoreSaveResponse {
+	Error Error = 1;	// 全局错误信息
+	repeated ResponseItem SuccessList = 2;	// 成功的存储结果列表
+	repeated ResponseItem FailureList = 3;	// 失败的存储结果列表
+}
+
+message StoreQueryRequest {
+	repeated Query QueryList = 1;	// 查询列表
+}
+
+message StoreQueryResponse {
+	Error Error = 1;	// 全局错误信息
+	repeated InfoRange SuccessList = 2;	// 成功的查询结果列表
+	repeated InfoRange FailureList = 3;	// 失败的查询结果列表
+}
+
+service StoreService {
+	rpc Save (StoreSaveRequest) returns (StoreSaveResponse);
+	rpc Query (StoreQueryRequest) returns (StoreQueryResponse);
+}

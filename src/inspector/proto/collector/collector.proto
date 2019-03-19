@@ -1,0 +1,16 @@
+syntax="proto3";
+import "inspector/proto/core/core.proto";
+
+message CollectorQueryRequest {
+	repeated Query QueryList = 1;	// 查询列表
+}
+
+message CollectorQueryResponse {
+	Error error = 1;	// 全局错误信息
+	repeated InfoRange SuccessList = 2;	// 成功的查询结果列表
+	repeated InfoRange FailureList = 3;	// 失败的查询结果列表
+}
+
+service Collector {
+	rpc Query (CollectorQueryRequest) returns (CollectorQueryResponse);
+}

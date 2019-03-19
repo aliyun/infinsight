@@ -1,0 +1,85 @@
+syntax="proto3";
+
+message Header {
+	string Service   = 1;   // 服务类型，用于区分实例属于哪种服务，用于分表存储
+	int32 Hid        = 2;	// 数据库hid
+	string Host      = 3;	// 全局唯一的进程名：IP:PORT or VirtualID
+}
+
+message KVPair {
+	string Key   = 1;
+	bytes  Value = 2;
+}
+
+message Info {
+	Header 	 Header    	= 1;	// 指定进程的头部信息
+	uint32 	 Timestamp 	= 2;	// 数据时间点
+	uint32 	 Count     	= 3;	// 当前数据块记录了几个时间点
+	uint32 	 Step      	= 4;	// 每两个相邻时间点的时间间隔（单位：秒）
+	Index 	 IndexList  	= 5;	// 需要存储的索引
+	repeated KVPair Items   = 6;	// KV数组，记录多个监控项的监控数据
+}
+
+message Index {
+	string Key   = 1;	// "default"与"ip:port"为保留key，用于指定按进程名查询
+	string Value = 2;	// 与Index Key对应的索引值
+}
+
+message Query {
+	Header   Header    	= 1;	// 查询的名字，默认为全局唯一的进程名：IP:PORT or VirtualID
+	uint32   TimeBegin 	= 2;	// 起始时间
+	uint32   TimeEnd   	= 3;	// 截止时间
+	Index    Index     	= 4;	// 索引类型,如果有的话。索引类型最终都要生成Name
+	repeated string KeyList = 5;	// 需要查询的监控项名称列表，空表示全查询
+//	repeated bytes  KeyList = 5;	// 需要查询的监控项名称列表，空表示全查询(count + size + key + size + key...)
+}
+
+message InfoRange {
+	Header Header = 1;	// 指定进程的头部信息
+	uint32 Count  = 2;	// 当前数据块记录了几个时间点
+	uint32 Step   = 3;	// 每两个相邻时间点的时间间隔（单位：秒）
+	Error  Error  = 4;	// 错误信息
+ 	bytes  Data   = 5;	// count(32bit)
+					// + list [
+			       		//	size(32bit)
+					//	+ key([]byte)
+		       			//	+ count(32bit)
+					//	+ list[
+		       			//		timestamp(32bit)
+		       			//		+ size(32bit)
+		       			//		+ data([]byte)
+		       			//	]
+		       			// ]
+
+//	repeated Item items = 2;	// 监控项一个range的数据
+}
+
+message Error {
+	uint32 Errno  = 1;	// 存储结果错误码
+	string Errmsg = 2;	// 存储结果错误信息
+}
+
+message ResponseItem {
+	Header Header   = 1;	// 单条数据的数据头信息
+	Error  Error	= 2;	// 单条数据的错误信息
+}
+
+// message Item {
+// 	string key = 1;				// 监控项目名字
+// 	repeated ValueElement values = 2;	// 监控项的连续时间数据
+// }
+// 
+// message ValueElement {
+// 	uint32 timestamp = 1;
+// 	bytes value = 2;
+// }
+
+message Stat {                                                                                                                                                                             
+	uint64 InstanceCount = 1;       // 实例总数                                                 
+	uint64 ItemCount = 2;           // 监控项总数（所有实例）                                   
+	uint64 CacheSize = 3;           // 有效数据总量                                             
+	uint64 QCount = 4;              // query总次数                                              
+	uint64 QSize = 5;               // query结果总大小                                          
+	uint64 CacheHitCount = 6;       // cache命中次数                                            
+}
+
