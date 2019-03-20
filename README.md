@@ -6,13 +6,14 @@ This is a brief introduction of Inspector, please visit [english wiki](https://y
 
 # Introduce
 ---
-Infinsight is a **MicroService-Oriented Second Level Monitor System**. We want to provide a monitor system that is easy to use and deploy, so Infinsight has the following features:
+![preview](https://github.com/aliyun/infinsight/raw/resource/png/readme/preview.png)
+Infinsight is a **MicroService-Oriented Real-Time General Monitor System**. We want to provide a monitor system that is easy to use and deploy, so Infinsight has the following features:
 
 1. Infinsight is a microservice-origented agentless monitor system, it collector service status remotely from client(such as mysql-client, redis-client, mongo-client, http-client and so on). So you can deploy it with at lease 1 machine(or VM).
 2. Infinsight is a second level monitor system. second level has two means: the one is Second-Level Granularity, the other is Second-Level Data Delay. That is Infinsight can display the service status of target service per second in almost realtime.
 3. Infinsight is a high performance monitoring system. Infinsight can service whit at lease thousands of target services with just one machine and query data within few milliseconds.
 4. Infinsight is a monitor system with good compression storage capability. It can store trillions level monitoring infomation just using terabytes of storage capacity. Statistics based on actual scenarios, the compression ratio we can achieve is: MongoDB(32:1), Http+Json(80:1)
-5. Infinsight is a monitor system that support distributed horizontal expansion. you can just copy Infinshgit to an other machine and run, Infinsight will be automatically senses topology changes and performs balance.
+5. Infinsight is a monitor system that support distributed horizontal expansion. you can just copy Infinshgit program to an other machine and start as same configuration, Infinsight will be automatically senses changes of topology and performs balance.
 
 # Simple Usage
 ---
@@ -75,7 +76,7 @@ Infinsight is a **MicroService-Oriented Second Level Monitor System**. We want t
 ![](https://github.com/aliyun/infinsight/raw/resource/png/readme/import%20dashboard-1.png)
 ![](https://github.com/aliyun/infinsight/raw/resource/png/readme/import%20dashboard-2.png)
 select output/service_template/mongodb/grafana.json
-![](https://github.com/aliyun/infinsight/raw/resource/png/readme/install%20success.png)
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/config%20suuccess.png)
 then, Infinsight is starting to monitor your service
 
 # Query Grammar
