@@ -7,13 +7,15 @@ This is a brief introduction of Inspector, please visit [english wiki](https://y
 # Introduce
 ---
 ![preview](https://github.com/aliyun/infinsight/raw/resource/png/readme/preview.png)
-Infinsight is a **MicroService-Oriented Real-Time General Monitor System**. We want to provide a monitor system that is easy to use and deploy, so Infinsight has the following features:
+Infinsight is a **MicroService-Oriented General Monitor System With Second Granularity**.
 
-1. Infinsight is a microservice-origented agentless monitor system, it collector service status remotely from client(such as mysql-client, redis-client, mongo-client, http-client and so on). So you can deploy it with at lease 1 machine(or VM).
-2. Infinsight is a second level monitor system. second level has two means: the one is Second-Level Granularity, the other is Second-Level Data Delay. That is Infinsight can display the service status of target service per second in almost realtime.
-3. Infinsight is a high performance monitoring system. Infinsight can service whit at lease thousands of target services with just one machine and query data within few milliseconds.
-4. Infinsight is a monitor system with good compression storage capability. It can store trillions level monitoring infomation just using terabytes of storage capacity. Statistics based on actual scenarios, the compression ratio we can achieve is: MongoDB(32:1), Http+Json(80:1)
-5. Infinsight is a monitor system that support distributed horizontal expansion. you can just copy Infinshgit program to an other machine and start as same configuration, Infinsight will be automatically senses changes of topology and performs balance.
+We aimd at providing a general monitoring system for most of common service(mysql, redis, mongodb etc) and microservice with high precision and high timeliness to help users troubleshooting easily. In addition we alse expect there is a monitoring system should be easily to deploy and use. So we develop Infinsight, here are some basic feature of it:
+
+1. Infinsight is a **Agentless** monitor system, it's collecte status of target server remotely with local client(such as mysql-client, redis-client, mongo-client, http-client etc.). So you can deploy it with at lease 1 machine(or VM).
+2. Infinsight is a **Quasi-Realtime** monitor system. it's has two means: the one is **Second Precision**, the other is **Second Timeliness**. That is Infinsight can display the service status of target service per second in almost realtime.
+3. Infinsight is a **High Performance** monitoring system. Infinsight can service whit at lease thousands of target services with just one machine and query data within few milliseconds.
+4. Infinsight is a monitor system with **High Compression Ratio**. It can store trillions records just using terabytes of storage capacity. Statistics based on actual scenarios, the compression ratio we can achieve is: MongoDB(32:1), Http+Json(80:1)
+5. Infinsight is a monitor system that support **Distributed Horizontal Expansion**. you can just copy Infinshgit program to an other machine and start as same configuration, Infinsight will be automatically senses changes of topology and performs balance.
 
 # Simple Usage
 ---
