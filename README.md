@@ -7,6 +7,7 @@ This is a brief introduction of Inspector, please visit [english wiki](https://y
 # Introduce
 ---
 ![preview](https://github.com/aliyun/infinsight/raw/resource/png/readme/preview.png)
+---
 Infinsight is a **MicroService-Oriented General Monitor System With Second Granularity**.
 
 We aimd at providing a general monitoring system for most of common service(mysql, redis, mongodb etc) and microservice with high precision and high timeliness to help users troubleshooting easily. In addition we alse expect there is a monitoring system should be easily to deploy and use. So we develop Infinsight, here are some basic feature of it:
