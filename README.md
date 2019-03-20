@@ -16,7 +16,8 @@ We aimd at providing a general monitoring system for most of common service(mysq
 2. Infinsight is a **Quasi-Realtime** monitor system. it's has two means: the one is **Second Precision**, the other is **Second Timeliness**. That is Infinsight can display the service status of target service per second in almost realtime.
 3. Infinsight is a **High Performance** monitoring system. Infinsight can service whit at lease thousands of target services with just one machine and query data within few milliseconds.
 4. Infinsight is a monitor system with **High Compression Ratio**. It can store trillions records just using terabytes of storage capacity. Statistics based on actual scenarios, the compression ratio we can achieve is: MongoDB(32:1), Http+Json(80:1)
-5. Infinsight is a monitor system that support **Distributed Horizontal Expansion**. you can just copy Infinshgit program to an other machine and start as same configuration, Infinsight will be automatically senses changes of topology and performs balance.
+5. Infinsight is a **Schemaless** monitor system. you don't need to specify which metrics to monitor, we will be get and save all of status. you can just add or delete metric with valid format(json bson or key-value) if you want to add a new metrics, infinsight will automatically senses the change of metrics and add new one.
+6. Infinsight is a monitor system that support **Distributed Horizontal Expansion**. you can just copy Infinshgit program to an other machine and start as same configuration, Infinsight will be automatically senses changes of topology and performs balance.
 
 # Simple Usage
 ---
