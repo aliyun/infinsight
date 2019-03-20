@@ -24,102 +24,70 @@ Infinsight is a **MicroService-Oriented Second Level Monitor System**. We want t
 > If you don't have any base enviroument, just run AutoDeploy.sh, it's will be help you to download and config all env you need
 > ---
 
-1. Configure your base service
-	* 1. make sure **gcc** is exist
-	* 2. make sure **golang** is exist and version is greater than 1.10.* 
-	
-	> if not exist, 'AutoDeploy.sh' will be auto downlaod and deploy golang environment at $DeployDir[default:output]
+## 1. Build
 
-	* 3. configure IP:PORT of **MongoDB**. 
+> 1. Make sure "gcc" command is exist
+> 2. Open and update “Base.cfg”， Base.cfg is a bash script. If you don't have "golang","mongodb" or "grafana" env, please don't change anything.
+> 	* modify PATH GOROOT GOPATH for "go" command
+> 	* modify PATH for "mongo" command
+> 	* modify MongoDB_IP MongoDB_PORT and all MongoDB_* to connect an exist MongoDB Server
+> 	* modify Grafana_IP Grafana_PORT and all Grafana_* to connect an exist Grafana Server
+> 	* modify Inspector\_*_PORT if port confict
+> 3. Run "sh AutoDeploy.sh", script will be config your base env and compile you Infinsight, like this
+> ![build](https://github.com/aliyun/infinsight/raw/resource/png/readme/build.png)
+> ![output-dir](https://github.com/aliyun/infinsight/raw/resource/png/readme/output-dir.png)
+> your output directory will be like this:
+> 	* api_server, store_server, collector_server is 3 parts of Infinsight
+> 	* service_template is all template of all service we support. It's will help you to register your service and instance easily
+> 	* go mongodb-linux-x86_64-4.0.6 grafana-6.0.1 is base envirenment
+> 	* tar for downloading
+> 	* all script(*.sh) is start and stop script for each service
 
-	> config MongoDB_IP and MongoDB_PORT in Base.cfg
-	> 
-	> if MongoDB is not exist, 'AutoDeploy.sh' will be auto download and deploy MongoDB at specified IP and PORT at $DeployDir[default:output]
-	
-	* 4. configure your IP:PORT of **Grafana**. 
-	
-	> config Grafana_IP and Grafana_PORT in Base.cfg
-	> 
-	> if Grafana is not exist, 'AutoDeploy.sh' will be auto download and deploy Grafana at specified IP and PORT at $DeployDir[default:output]
+## 2. Run
 
-2.	Build and Run infinsight
-	* 1. build project. 
-	
-	> config $DeployDir in Base.cfg to specify the building path
-	> 
-	> run AutoDeploy.sh to build
-	 
-	* 2. run project. 
-	
-	> goto the building path($DeployDir)
-	> 
-	> run start_grafana.sh if you want to use the Grafana downloaded
-	> 
-	> run start_mongo.sh if you want to use the MongoDB downloaded
-	> 
-	> run start_inspector.sh to start the Monitor
+1. Start Infinshgit
+	* cd output
+	* sh start_mongo.sh (if you don't have mongo server in your system)
+	* sh start_grafana.sh (if you don't have grafana server in your system)
+	* sh start_inspector.sh
 
-3. Config new service and instance to monitor
-	> cd script/mongodb for adding MongoDB for example
-	1. mongo 127.0.0.1:27017/MonitorConfig add_service.js
-	2. mongo 127.0.0.1:27017/MonitorConfig add_instance.js
-	3. mongo 127.0.0.1:27017/MonitorData create_index.js
-
-4. Config grafana to show monitor data
+2. Config Grafana Data Source
 	1. Add Data Source
-	![4.1](https://github.com/aliyun/infinsight/raw/develop/png/4.1%20create%20data%20source.png)
+	![4-1](https://github.com/aliyun/infinsight/raw/resource/png/readme/4-1.png)
 	
-	![4.2](https://github.com/aliyun/infinsight/raw/develop/png/4.2%20add%20new.png)
+	![4-2](https://github.com/aliyun/infinsight/raw/resource/png/readme/4-2.png)
+	we use Prometheus Http API to communicate with Grafana
 
-	![4.3](https://github.com/aliyun/infinsight/raw/develop/png/4.3%20choose%20Prometheus.png)
-	
-	![4.4](https://github.com/aliyun/infinsight/raw/develop/png/4.4%20save%20config.png)
-	2. Load Template
+	![4-3](https://github.com/aliyun/infinsight/raw/resource/png/readme/4-3.png)
+	Set "Name" as "Infinsight", you can use more standard grafana template easily
+		
+3. Add New Service
+	![service-config](https://github.com/aliyun/infinsight/raw/resource/png/readme/service_config.png)
+	* cd output/service_template
+	* open service.cfg, service.cfg is a bash script
+	* config MongoIP and MongoPort
+	* config service_name to whatever you want
+	* config service_type to one of [mysql, redis, mongodb, http_json]
+	* add you instance list as example
+	* run "sh register.sh"(make sure "mongo" command exist), in the directory you choose for service_type will be create 4 files: add_instance.js add_service.js create_index.js and grafana.json
 
-	> Import Dashboard: output/grafana_template/mongodb
-
-	![4.5](https://github.com/aliyun/infinsight/raw/develop/png/4.5%20click%20home.png)
-	
-	![4.6](https://github.com/aliyun/infinsight/raw/develop/png/4.6%20import.png)
-	
-	![4.7](https://github.com/aliyun/infinsight/raw/develop/png/4.7%20upload%20from%20file.png)
-	
-	![4.8](https://github.com/aliyun/infinsight/raw/develop/png/4.8%20do%20import.png)
-	
-	![4.9](https://github.com/aliyun/infinsight/raw/develop/png/4.9%20ok.png)
-	
-# Add New Service
-> if you want to add new service, you can use output/mongodb as template to modify
-
-![](https://github.com/aliyun/infinsight/raw/develop/png/add%20service.png)
-
-1. cp -r output/mongodb output/your_new_service
-2. modify add_service.js, change all "mongodb" but "dbType" as the service name you want
-3. choose a dbType
-4. run this js as "mongo" command: mongo 127.0.0.1:27017/MonitorConfig add_service.js
-
-> support dbType:
-> http_json / mysql / redis / mongodb
-
-# Add New instance to Monitor
-> if you want to add new service, you can use output/mongodb as template to modify
-
-![](https://github.com/aliyun/infinsight/raw/develop/png/add%20new%20instance.png)
-
-1. change ip:port list as you need
-2. run this js as "mongo" command: mongo 127.0.0.1:27017/MonitorConfig add_instance.js
+4. Load Grafana Template
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/import%20dashboard-1.png)
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/import%20dashboard-2.png)
+select output/service_template/mongodb/grafana.json
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/install%20success.png)
+then, Infinsight is starting to monitor your service
 
 # Query Grammar
 1. directly show
-
 all "mongodb" in image below is must be the "service name", never change it.
-![](https://github.com/aliyun/infinsight/raw/develop/png/Grammar%201.1.png)
-
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/Grammar%201.1.png)
 all metrics is just json/bson path or monitor key
-![](https://github.com/aliyun/infinsight/raw/develop/png/serverStatus.png)
-2. cauculate
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/serverStatus.png)
 
+2. cauculate
 if you want to calculate the monitor value, you can add calculate expression in "[]" 
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/Grammar%201.2.png)
 
 > calculate function:
 > 
@@ -140,12 +108,11 @@ if you want to calculate the monitor value, you can add calculate expression in 
 > 
 > special variable $0 means "each metric", and it's always used in arrayDiff($0) function 
 
-![](https://github.com/aliyun/infinsight/raw/develop/png/Grammar%201.2.png)
 3. regexp
 you can also use regexp to specify a group of metrics, just use reg() function. and the "legend" is the show name of each metric, filed$i means the i's filed. "name" means the last field
-![](https://github.com/aliyun/infinsight/raw/develop/png/Grammar%201.3.png)
+![](https://github.com/aliyun/infinsight/raw/resource/png/readme/Grammar%201.3.png)
 
 # Join us
 ---
 We have a WeChat group so that users can join and discuss:<br>
-![wechat](https://github.com/aliyun/infinsight/blob/develop/png/wechat.png)
+![wechat](https://github.com/aliyun/infinsight/raw/resource/png/readme/wechat.png)
