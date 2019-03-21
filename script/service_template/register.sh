@@ -17,11 +17,12 @@ sed -i "s/service_name/$service_name/g" ./$service_type/grafana.json
 n=0
 ins_info="ins"$n
 while true; do
-	ins_id=$n
-	eval ins_ip=\${$ins_info[0]}
-	eval ins_port=\${$ins_info[1]}
-	eval ins_username=\${$ins_info[2]}
-	eval ins_password=\${$ins_info[3]}
+	eval pid=\${$ins_info[0]}
+	eval id=\${$ins_info[1]}
+	eval ins_ip=\${$ins_info[2]}
+	eval ins_port=\${$ins_info[3]}
+	eval ins_username=\${$ins_info[4]}
+	eval ins_password=\${$ins_info[5]}
 	if [ ! $ins_ip  -o -z $ins_ip ]; then
 		break
 	fi
@@ -35,8 +36,8 @@ while true; do
 
 	items=$items",
 			\"$service_name.distribute.$ins_ip:$ins_port\" : { 
-				\"pid\" : 0,
-				\"hid\" : $ins_id,
+				\"pid\" : $pid,
+				\"hid\" : $id,
 				\"host\" : \"$ins_ip:$ins_port\",
 				\"username\" : \"$ins_username\",
 				\"password\" : \"$ins_password\"
