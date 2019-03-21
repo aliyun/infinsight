@@ -1,4 +1,14 @@
 {
+  "__inputs": [
+    {
+      "name": "INFINSIGHT",
+      "label": "Infinsight",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -116,7 +126,7 @@
           "text": "all{hid=0, pid=0}",
           "value": "all{hid=0, pid=0}"
         },
-        "datasource": "Infinsight",
+        "datasource": "${INFINSIGHT}",
         "definition": "label_values(service_name_sharding{all{hid=0, pid=0}},service_name_sharding)",
         "hide": 0,
         "includeAll": false,
@@ -141,7 +151,7 @@
           "text": "service_name{hid=0, pid=0}",
           "value": "service_name{hid=0, pid=0}"
         },
-        "datasource": "Infinsight",
+        "datasource": "${INFINSIGHT}",
         "definition": "label_values(service_name_cluster{$service_name_sharding},service_name_cluster)",
         "hide": 0,
         "includeAll": false,
@@ -166,7 +176,7 @@
           "text": "127.0.0.1:6379",
           "value": "127.0.0.1:6379"
         },
-        "datasource": "Infinsight",
+        "datasource": "${INFINSIGHT}",
         "definition": "label_values(service_name_instance{$service_name_cluster},service_name_instance)",
         "hide": 0,
         "includeAll": false,
@@ -245,6 +255,5 @@
   },
   "timezone": "",
   "title": "service_name Monitoring",
-  "uid": "bIDBQpqik123",
   "version": 2
 }
