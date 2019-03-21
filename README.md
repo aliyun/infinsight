@@ -64,10 +64,10 @@ We aimd at providing a general monitoring system for most of common service(mysq
 	we use Prometheus Http API to communicate with Grafana
 
 	![4-3](https://github.com/aliyun/infinsight/raw/resource/png/readme/4-3.png)
+	
 	Set "Name" as "Infinsight", you can use more standard grafana template easily
 		
 3. Add New Service
-	![service-config](https://github.com/aliyun/infinsight/raw/resource/png/readme/service_config.png)
 	* cd output/service_template
 	* open service.cfg, service.cfg is a bash script
 	* config MongoIP and MongoPort
