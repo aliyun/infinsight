@@ -110,9 +110,14 @@ func (sc *StepCompress) DoStep(input interface{}, params ...interface{}) (interf
 		case 0:
 			fallthrough
 		case 1:
-			// all data is same, use sameDigitCompress
-			compressRes, err = compress.Compress(compress.SameDigitCompress, count, compressValue.SameVal)
-			itemEmptyCount++
+			if compressValue.ValCount == count {
+				// all data is same, use sameDigitCompress
+				compressRes, err = compress.Compress(compress.SameDigitCompress, count, compressValue.SameVal)
+				itemEmptyCount++
+			} else {
+				// data missing
+				compressRes, err = compress.Compress(compress.DiffCompress, compressValue.GcdValue, usedArr)
+			}
 		case 2:
 			// not all the same
 			compressRes, err = compress.Compress(compress.DiffCompress, compressValue.GcdValue, usedArr)
