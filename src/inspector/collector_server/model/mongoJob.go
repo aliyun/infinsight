@@ -48,14 +48,16 @@ func NewSenderContext(jobName, instanceName string, hid int32, count, step uint3
 // --------------------splitter--------------------
 type CompressValue struct {
 	SameVal  int64 // store the same value
-	SameFlag byte  // 0: unset, 1: set and same 2: set and not same
 	GcdValue int64 // greatest common divisor
+	ValCount int   // value counter
+	SameFlag byte  // 0: unset, 1: set and same 2: set and not same
 }
 
 func NewCompressValue() *CompressValue {
 	return &CompressValue{
 		SameFlag: 0,
 		GcdValue: 0,
+		ValCount: 0,
 	}
 }
 
@@ -106,4 +108,6 @@ func (cc *CompressContext) Update(idx int, val int64) {
 	if cv.GcdValue < 0 {
 		cv.GcdValue = -cv.GcdValue
 	}
+
+	cv.ValCount++
 }
