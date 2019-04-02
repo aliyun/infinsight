@@ -1,18 +1,14 @@
 /*
 // =====================================================================================
-// 
+//
 //       Filename:  FakeStepFinish.cpp
-// 
+//
 //    Description:  用于测试的假step，到当前step即终止workflow
-// 
+//
 //        Version:  1.0
 //        Created:  06/12/2018 06:42:56 PM
-//       Revision:  none
 //       Compiler:  g++
-// 
-//         Author:  Elwin.Gao (elwin), elwin.gao4444@gmail.com
-//        Company:  
-// 
+//
 // =====================================================================================
 */
 
@@ -21,8 +17,8 @@ package test
 type FakeStepFinish struct {
 	BeforeCount int
 	DoStepCount int
-	AfterCount int
-	Data int
+	AfterCount  int
+	Data        int
 }
 
 func (step *FakeStepFinish) Name() string {
@@ -68,4 +64,3 @@ func (step *FakeStepFinish) After(input interface{}, params ...interface{}) (boo
 	step.AfterCount++
 	return false, nil
 }
-

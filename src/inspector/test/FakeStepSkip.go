@@ -1,18 +1,14 @@
 /*
 // =====================================================================================
-// 
+//
 //       Filename:  FakeStepSkip.cpp
-// 
+//
 //    Description:  用于测试的假step，step中途跳过
-// 
+//
 //        Version:  1.0
 //        Created:  06/12/2018 06:42:56 PM
-//       Revision:  none
 //       Compiler:  g++
-// 
-//         Author:  Elwin.Gao (elwin), elwin.gao4444@gmail.com
-//        Company:  
-// 
+//
 // =====================================================================================
 */
 
@@ -21,8 +17,8 @@ package test
 type FakeStepSkip struct {
 	BeforeCount int
 	DoStepCount int
-	AfterCount int
-	Data int
+	AfterCount  int
+	Data        int
 }
 
 func (step *FakeStepSkip) Name() string {
@@ -68,4 +64,3 @@ func (step *FakeStepSkip) After(input interface{}, params ...interface{}) (bool,
 	step.AfterCount++
 	return true, nil
 }
-

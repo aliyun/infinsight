@@ -7,11 +7,7 @@
 //
 //        Version:  1.0
 //        Created:  08/09/2018 11:51:01 PM
-//       Revision:  none
 //       Compiler:  go1.10.1
-//
-//         Author:  zhuzhao.cx, zhuzhao.cx@alibaba-inc.com
-//        Company:  Alibaba Group
 //
 // =====================================================================================
 */
@@ -28,8 +24,8 @@ import (
 	"inspector/util"
 
 	"github.com/golang/glog"
-	"reflect"
 	"inspector/util/unsafe"
+	"reflect"
 )
 
 const (
@@ -141,7 +137,7 @@ func (ds *DictServer) GetValue(key string) (string, error) {
 func (ds *DictServer) GetValueOnly(key string) (string, error) {
 	// v, ok := ds.mp.Load(key)
 	v, ok := ds.mp[key]
-	if  !ok || v == emptyKey {
+	if !ok || v == emptyKey {
 		return emptyKey, fmt.Errorf(KeyNotFound)
 	} else {
 		return v, nil
@@ -457,7 +453,7 @@ func (ds *DictServer) copyMp() map[string]string {
 }
 
 func (ds *DictServer) generateLocalMap(localMp map[string]string, remoteUnused []int,
-		remoteSize int, copyHandlingSet map[string]struct{}) map[string]string {
+	remoteSize int, copyHandlingSet map[string]struct{}) map[string]string {
 	for key := range copyHandlingSet {
 		nxt := ds.getNextIndex(&remoteUnused, &remoteSize)
 		localMp[key] = util.RepInt2String(nxt)
@@ -506,7 +502,7 @@ func (ds *DictServer) generateRemoteUnused(remoteMap map[string]interface{}) ([]
 	vis := make([]bool, n)
 	for key, val := range remoteMap {
 		valS := val.(string)
-		if util.FilterName(key)|| valS == emptyKey {
+		if util.FilterName(key) || valS == emptyKey {
 			continue
 		}
 

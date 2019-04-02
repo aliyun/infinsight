@@ -7,11 +7,7 @@
 //
 //        Version:  1.0
 //        Created:  07/06/2018 01:48:01 PM
-//       Revision:  none
 //       Compiler:  go1.10.3
-//
-//         Author:  zhuzhao.cx, zhuzhao.cx@alibaba-inc.com
-//        Company:  Alibaba Group
 //
 // =====================================================================================
 */
@@ -332,10 +328,10 @@ func (mc *MongoConfig) GetArray(section, key string, path ...string) ([]string, 
 	var resArr []string
 	for i := 0; i < len(ret); {
 		// parse length
-		length := int(binary.LittleEndian.Uint32(ret[i: i+4]))
+		length := int(binary.LittleEndian.Uint32(ret[i : i+4]))
 		i += 5 // length + type
 		// parse body
-		resArr = append(resArr, string(ret[i: i + length]))
+		resArr = append(resArr, string(ret[i:i+length]))
 		i += length
 	}
 	return resArr, nil

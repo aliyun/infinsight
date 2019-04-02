@@ -1,18 +1,14 @@
 /*
 // =====================================================================================
-// 
+//
 //       Filename:  FakeStep.cpp
-// 
+//
 //    Description:  用于测试的假step
-// 
+//
 //        Version:  1.0
 //        Created:  06/12/2018 06:42:56 PM
-//       Revision:  none
 //       Compiler:  g++
-// 
-//         Author:  Elwin.Gao (elwin), elwin.gao4444@gmail.com
-//        Company:  
-// 
+//
 // =====================================================================================
 */
 
@@ -21,8 +17,8 @@ package test
 type FakeStep struct {
 	BeforeCount int
 	DoStepCount int
-	AfterCount int
-	Data int
+	AfterCount  int
+	Data        int
 }
 
 func (step *FakeStep) Name() string {
@@ -68,4 +64,3 @@ func (step *FakeStep) After(input interface{}, params ...interface{}) (bool, err
 	step.AfterCount++
 	return true, nil
 }
-

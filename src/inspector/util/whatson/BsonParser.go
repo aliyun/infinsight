@@ -7,23 +7,19 @@
 //
 //        Version:  1.0
 //        Created:  07/05/2018 19:50:11 PM
-//       Revision:  none
 //       Compiler:  go1.10.3
-//
-//         Author:  zhuzhao.cx, zhuzhao.cx@alibaba-inc.com
-//        Company:  Alibaba Group
 //
 // =====================================================================================
 */
 
 package whatson
 
-import(
-	"errors"
+import (
 	"encoding/binary"
+	"errors"
 	"fmt"
-	"strings"
 	"math"
+	"strings"
 
 	"inspector/util/unsafe"
 )
@@ -138,47 +134,47 @@ func (bp *BsonParser) cstringEnd(data []byte, idx int) int {
 }
 
 func (bp *BsonParser) parseType(data []byte, begIndex int, valueType ValueType) (
-		retIdx int, result []byte) {
+	retIdx int, result []byte) {
 	switch valueType {
 	case FLOAT:
-		result = data[begIndex: begIndex + 8]
+		result = data[begIndex : begIndex+8]
 		retIdx = begIndex + 8
 	case STRING:
-		totLen := int(binary.LittleEndian.Uint32(data[begIndex: begIndex + 4]))
-		result = data[begIndex + 4: begIndex + 4 + totLen - 1]
+		totLen := int(binary.LittleEndian.Uint32(data[begIndex : begIndex+4]))
+		result = data[begIndex+4 : begIndex+4+totLen-1]
 		retIdx = begIndex + 4 + totLen
 	case OBJECT:
-		result = data[begIndex: begIndex + 12]
+		result = data[begIndex : begIndex+12]
 		retIdx = begIndex + 12
 	case BOOL:
-		result = data[begIndex: begIndex + 1]
+		result = data[begIndex : begIndex+1]
 		retIdx = begIndex + 1
 	case BINARY:
-		totLen := int(binary.LittleEndian.Uint32(data[begIndex: begIndex + 4]))
+		totLen := int(binary.LittleEndian.Uint32(data[begIndex : begIndex+4]))
 		// data[4] is subtype which is useless here
-		result = data[begIndex + 5: begIndex + 5 + totLen]
+		result = data[begIndex+5 : begIndex+5+totLen]
 		retIdx = begIndex + 5 + totLen
 	case INTEGER:
-		result = data[begIndex: begIndex + 4]
+		result = data[begIndex : begIndex+4]
 		retIdx = begIndex + 4
 	case DATETIME:
 		fallthrough
 	case INT64:
-		result = data[begIndex: begIndex + 8]
+		result = data[begIndex : begIndex+8]
 		retIdx = begIndex + 8
 	case TIMESTAMP:
 		fallthrough
 	case UINT64:
-		result = data[begIndex: begIndex + 8]
+		result = data[begIndex : begIndex+8]
 		retIdx = begIndex + 8
 	case DECIMAL128:
-		result = data[begIndex: begIndex + 16]
+		result = data[begIndex : begIndex+16]
 		retIdx = begIndex + 16
 	case DOCUMENT:
 		fallthrough
 	case ARRAY:
-		totLen := int(binary.LittleEndian.Uint32(data[begIndex: begIndex + 4]))
-		result = data[begIndex: begIndex + totLen]
+		totLen := int(binary.LittleEndian.Uint32(data[begIndex : begIndex+4]))
+		result = data[begIndex : begIndex+totLen]
 		retIdx = begIndex + totLen
 	default:
 
@@ -190,7 +186,7 @@ func (bp *BsonParser) parseType(data []byte, begIndex int, valueType ValueType) 
 func (bp *BsonParser) parseArray(data []byte, begIndex, endIndex int) (content []byte, err error) {
 	var element []byte
 	var idxEnd int
-	for i := begIndex + 4; i < endIndex - 1; {
+	for i := begIndex + 4; i < endIndex-1; {
 		// parse type
 		t := data[i]
 		i++
@@ -201,7 +197,7 @@ func (bp *BsonParser) parseArray(data []byte, begIndex, endIndex int) (content [
 		}
 
 		tp := bp.mongoType2ValueType(t)
-		i, element = bp.parseType(data, idxEnd + 1, tp)
+		i, element = bp.parseType(data, idxEnd+1, tp)
 		length := make([]byte, 4)
 		binary.LittleEndian.PutUint32(length, uint32(len(element)))
 		content = append(content, length...)  // body length
@@ -226,7 +222,7 @@ func (bp *BsonParser) parseArray(data []byte, begIndex, endIndex int) (content [
 */
 // todo, 考虑优化，用byte.Buffer代替parentKey []string减少拷贝
 func (bp *BsonParser) dfs(data []byte, parentKey []string, callback ParseCallBack,
-		begIndex int, valueType ValueType) (retIdx int, err error) {
+	begIndex int, valueType ValueType) (retIdx int, err error) {
 	var content []byte
 S:
 	switch valueType {
@@ -256,16 +252,16 @@ S:
 			err = nil
 		}
 	case DOCUMENT:
-		totLen := int(binary.LittleEndian.Uint32(data[begIndex: begIndex + 4]))
+		totLen := int(binary.LittleEndian.Uint32(data[begIndex : begIndex+4]))
 		endIndex := begIndex + totLen
 		// fmt.Println(begIndex, endIndex, totLen, len(data))
-		if err = callback(parentKey, data[begIndex: endIndex], DOCUMENT); err != nil {
+		if err = callback(parentKey, data[begIndex:endIndex], DOCUMENT); err != nil {
 			if err.Error() == CB_PATH_PRUNE { // branch prune
 				return endIndex, nil
 			}
 			break S
 		}
-		for i := begIndex + 4; i < endIndex - 1; {
+		for i := begIndex + 4; i < endIndex-1; {
 			// parse type
 			t := data[i]
 			i++
@@ -277,15 +273,15 @@ S:
 			}
 
 			// pay more attention, key is shallow copy
-			key := unsafe.Bytes2String(data[i: idxEnd])
+			key := unsafe.Bytes2String(data[i:idxEnd])
 			// key := string(data[i: idxEnd])
 			parentKey = append(parentKey, key)
 
-			i, err = bp.dfs(data, parentKey, callback, idxEnd + 1,
+			i, err = bp.dfs(data, parentKey, callback, idxEnd+1,
 				bp.mongoType2ValueType(t))
 
 			// backtracking
-			parentKey = parentKey[: len(parentKey) - 1]
+			parentKey = parentKey[:len(parentKey)-1]
 
 			if err != nil {
 				retIdx = 0
@@ -296,7 +292,7 @@ S:
 		retIdx = endIndex
 
 	case ARRAY:
-		totLen := int(binary.LittleEndian.Uint32(data[begIndex: begIndex + 4]))
+		totLen := int(binary.LittleEndian.Uint32(data[begIndex : begIndex+4]))
 		endIndex := begIndex + totLen
 		// to make it more clear, I separate the parseArray for-loop and dfs for-loop
 		content, err = bp.parseArray(data, begIndex, endIndex)
@@ -309,7 +305,7 @@ S:
 			}
 			break S
 		}
-		for i := begIndex + 4; i < endIndex - 1; {
+		for i := begIndex + 4; i < endIndex-1; {
 			// parse type
 			t := data[i]
 			i++
@@ -320,14 +316,14 @@ S:
 				break S
 			}
 
-			key := fmt.Sprintf("[%s]", unsafe.Bytes2String(data[i: idxEnd]))
+			key := fmt.Sprintf("[%s]", unsafe.Bytes2String(data[i:idxEnd]))
 			parentKey = append(parentKey, key)
 
-			i, err = bp.dfs(data, parentKey, callback, idxEnd + 1,
+			i, err = bp.dfs(data, parentKey, callback, idxEnd+1,
 				bp.mongoType2ValueType(t))
 
 			// backtracking
-			parentKey = parentKey[: len(parentKey) - 1]
+			parentKey = parentKey[:len(parentKey)-1]
 
 			if err != nil {
 				retIdx = 0
@@ -348,7 +344,7 @@ func (bp *BsonParser) Parse(data []byte, callback ParseCallBack) error {
 	return err
 }
 
-func (bp *BsonParser) Get(data []byte, path... string) ([]byte, error) {
+func (bp *BsonParser) Get(data []byte, path ...string) ([]byte, error) {
 	var result []byte // little-endian default
 	if len(path) == 0 {
 		return data, nil
@@ -363,7 +359,7 @@ func (bp *BsonParser) Get(data []byte, path... string) ([]byte, error) {
 			return nil
 		}
 		depthKey := len(keyPath)
-		if idx == depthKey - 1 &&
+		if idx == depthKey-1 &&
 			strings.Compare(keyPath[idx], path[idx]) == 0 {
 			idx++
 			if idx == len(path) {

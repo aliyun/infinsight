@@ -7,11 +7,7 @@
 //
 //        Version:  1.0
 //        Created:  07/16/2018 08:27:20 PM
-//       Revision:  none
 //       Compiler:  g++
-//
-//         Author:  Elwin.Gao (elwin), elwin.gao4444@gmail.com
-//        Company:
 //
 // =====================================================================================
 */

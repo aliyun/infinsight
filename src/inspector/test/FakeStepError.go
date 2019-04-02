@@ -1,18 +1,14 @@
 /*
 // =====================================================================================
-// 
+//
 //       Filename:  FakeStepError.cpp
-// 
+//
 //    Description:  用于测试step失败的测试step
-// 
+//
 //        Version:  1.0
 //        Created:  06/12/2018 06:42:56 PM
-//       Revision:  none
 //       Compiler:  g++
-// 
-//         Author:  Elwin.Gao (elwin), elwin.gao4444@gmail.com
-//        Company:  
-// 
+//
 // =====================================================================================
 */
 
@@ -23,7 +19,7 @@ import "errors"
 type FakeStepError struct {
 	BeforeCount int
 	DoStepCount int
-	AfterCount int
+	AfterCount  int
 }
 
 func (step *FakeStepError) Name() string {
@@ -48,4 +44,3 @@ func (step *FakeStepError) After(input interface{}, params ...interface{}) (bool
 	step.AfterCount++
 	return true, nil
 }
-

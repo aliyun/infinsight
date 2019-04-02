@@ -7,18 +7,14 @@
 //
 //        Version:  1.0
 //        Created:  07/05/2018 17:41:31 PM
-//       Revision:  none
 //       Compiler:  go1.10.3
-//
-//         Author:  zhuzhao.cx, zhuzhao.cx@alibaba-inc.com
-//        Company:  Alibaba Group
 //
 // =====================================================================================
 */
 
 package whatson
 
-import(
+import (
 	"github.com/golang/glog"
 )
 
@@ -26,7 +22,7 @@ type ValueType byte
 
 // all data type, no need to including all of the them in every parse method
 const (
-	STRING   ValueType = iota
+	STRING ValueType = iota
 	INTEGER
 	FLOAT
 	BOOL
@@ -70,7 +66,7 @@ type Parser interface {
 	 * Get the value of given path.
 	 * Return value and error if has.
 	 */
-	Get(data []byte, path... string) ([]byte, error)
+	Get(data []byte, path ...string) ([]byte, error)
 
 	/*
 	 * Convert valueType to interface{}

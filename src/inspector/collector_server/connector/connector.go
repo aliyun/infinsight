@@ -1,10 +1,9 @@
 package connector
 
 import (
+	"github.com/golang/glog"
 	"inspector/collector_server/model"
 	"inspector/util"
-
-	"github.com/golang/glog"
 )
 
 type Connector interface {

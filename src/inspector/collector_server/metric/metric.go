@@ -8,9 +8,8 @@ import (
 
 	"inspector/util"
 
-	"sync"
-
 	"github.com/golang/glog"
+	"sync"
 )
 
 const (

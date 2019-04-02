@@ -7,11 +7,7 @@
 //
 //        Version:  1.0
 //        Created:  08/22/2018 16:55:41 AM
-//       Revision:  none
 //       Compiler:  go1.10.1
-//
-//         Author:  zhuzhao.cx, zhuzhao.cx@alibaba-inc.com
-//        Company:  Alibaba Group
 //
 // =====================================================================================
 */

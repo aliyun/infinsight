@@ -7,11 +7,7 @@
 //
 //        Version:  1.0
 //        Created:  08/06/2018 03:21:01 PM
-//       Revision:  none
 //       Compiler:  go1.10.1
-//
-//         Author:  zhuzhao.cx, zhuzhao.cx@alibaba-inc.com
-//        Company:  Alibaba Group
 //
 // =====================================================================================
 */
@@ -221,7 +217,7 @@ func (h *Heartbeat) GetServices(module ModuleType, status ServiceStatus) ([]*Nod
 		//	fmt.Printf("update:[%d], interval:[%d], h.timeout:[%d], now[%d]", update, interval, h.timeout, now)
 		//}
 		var exist bool
-		if update + h.timeout * uint32(interval) >= now {
+		if update+h.timeout*uint32(interval) >= now {
 			exist = true
 		}
 
@@ -268,7 +264,7 @@ func (h *Heartbeat) IsAlive(module ModuleType, service string) ServiceStatus {
 	}
 
 	now := h.currentTime()
-	if uint32(update) + h.timeout * uint32(interval) >= now {
+	if uint32(update)+h.timeout*uint32(interval) >= now {
 		return ServiceAlive
 	}
 	glog.Infof("module[%v] service[%s] dead, update[%v] timeout[%v] interval[%v] now[%v]",
@@ -566,8 +562,8 @@ func (h *Heartbeat) updateGid(id int, globalUpdate bool) error {
 
 	if globalUpdate {
 		// set global gid.
-		if err := h.cfgHandler.SetItem(SectionName, module, id + 1, idName); err != nil {
-			return fmt.Errorf("set increase id[%d] fail[%v]", id + 1, err)
+		if err := h.cfgHandler.SetItem(SectionName, module, id+1, idName); err != nil {
+			return fmt.Errorf("set increase id[%d] fail[%v]", id+1, err)
 		}
 	}
 
