@@ -30,10 +30,6 @@ type ApiHandler struct {
 	allTimeConsume      time.Duration
 }
 
-// const StandardSql string = "select cust.disk_size, stat.max_iops, stat.max_conn, stat.cpu_cores, stat.mem_size from custins_hostins_rel chr, cust_instance cust, instance_stat stat where chr.custins_id = ? and chr.hostins_id = stat.ins_id and chr.custins_id = cust.id limit 1;"
-// const StandardSql string = "select cust.id, cust.disk_size, stat.max_iops, stat.max_conn, stat.cpu_cores, stat.mem_size from cust_instance cust, custins_hostins_rel chr, instance_stat stat where cust.status in (1,5,6,7,8) and cust.is_deleted = 0 and cust.db_type = 'mongodb' and cust.character_type != 'logic' and chr.custins_id = cust.id and chr.hostins_id = stat.ins_id group by cust.id;"
-const StandardSql string = "select cust.id, cust.disk_size, stat.max_iops, stat.max_conn, stat.cpu_cores, stat.mem_size, level.limit_memory from cust_instance cust, custins_hostins_rel chr, instance_stat stat, instance_level level where cust.status in (1,5,6,7,8) and cust.is_deleted = 0 and cust.db_type = 'mongodb' and cust.character_type != 'logic' and chr.custins_id = cust.id and chr.hostins_id = stat.ins_id and cust.level_id = level.id group by cust.id"
-
 /*
 // ===  STRUCT  ========================================================================
 //         Name:  StandardInfoModel

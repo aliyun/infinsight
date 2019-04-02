@@ -90,7 +90,6 @@ func main() {
 	// http.HandleFunc("/api/v1/query_range", handler.QueryRangeHandler)
 	// http.HandleFunc("/api/v1/label/__name__/values", handler.SuggestionHandler)
 	// http.HandleFunc("/api/v1/series", handler.SeriesHandler)
-	// http.HandleFunc("/rdsapi/QueryForRdsapi", handler.RdsApiHandler)
 
 	http.HandleFunc("/", handler.IndexHandler)
 	http.HandleFunc("/api/v1/query_range", func(w http.ResponseWriter, r *http.Request) {
@@ -101,9 +100,6 @@ func main() {
 	})
 	http.HandleFunc("/api/v1/series", func(w http.ResponseWriter, r *http.Request) {
 		new(handler.ApiHandler).SeriesHandler(w, r)
-	})
-	http.HandleFunc("/rdsapi/QueryForRdsapi", func(w http.ResponseWriter, r *http.Request) {
-		new(handler.ApiHandler).RdsApiHandler(w, r)
 	})
 
 	http.ListenAndServe(fmt.Sprintf(":%d", configure.Options.ServicePort), nil)
