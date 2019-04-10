@@ -102,17 +102,15 @@ func (tc *TimeCache) Set(info *core.Info) error {
 	index := tc.hash([]byte(host)) % tc.concurrencty
 
 	// create new instance list
-	if insList, ok = tc.cache[index][host]; !ok { // check if the instance exist
-		tc.lockers[index].Lock()
-		if _, ok = tc.cache[index][host]; !ok { // double check
-			tc.cache[index][host] = new(instanceList)
-			tc.cache[index][host].timeLevelList = new(list.List)
-			tc.newInstance(host, index, info)
-		}
-		tc.lockers[index].Unlock()
-		insList = tc.cache[index][host]
-		atomic.AddUint64(&GlobalStat.InstanceCount, 1)
+	tc.lockers[index].Lock()
+	if _, ok = tc.cache[index][host]; !ok { // check if the instance exist
+		tc.cache[index][host] = new(instanceList)
+		tc.cache[index][host].timeLevelList = new(list.List)
+		tc.newInstance(host, index, info)
 	}
+	tc.lockers[index].Unlock()
+	insList = tc.cache[index][host]
+	atomic.AddUint64(&GlobalStat.InstanceCount, 1)
 	tlList = insList.timeLevelList
 
 	tc.lockers[index].RLock()
