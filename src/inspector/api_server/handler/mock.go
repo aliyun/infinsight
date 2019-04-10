@@ -26,7 +26,7 @@ func ShowContext(r *http.Request) {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("path: /")
-	ShowContext(r)
+	// fmt.Println("path: /")
+	// ShowContext(r)
 	fmt.Fprintln(w, "inspector api is running")
 }

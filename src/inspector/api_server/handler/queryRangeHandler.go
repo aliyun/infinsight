@@ -305,7 +305,6 @@ func (h *ApiHandler) doQueryRange(service string,
 	var filterIndexResult [][]int
 	var filterDataResult [][]int64
 	// 将时间和show step变为虚拟时间和虚拟step，返回数据需要将时间恢复变为实际值
-	fmt.Println("debug: ", instanceSelector)
 	if showStep > 1 {
 		// do filter
 		glog.V(3).Infof("[Debug][doQueryRange] do filter[%v]", instanceSelector["filter"])
