@@ -32,33 +32,28 @@ func TestOriginDistance(t *testing.T) {
 	}
 	var x uint64 = 0
 	var y int64 = 0
-	var m uint64 = 1
-	var n int64 = 0
 
+	x = OriginDistanceEncode(util.NullData)
+	check(x == 0, "test")
 	x = OriginDistanceEncode(0)
-	check(x == m, "test")
-	m++
+	check(x == 2, "test")
 	for i := 1; i < 100; i++ {
 		x = OriginDistanceEncode(int64(-i))
-		check(x == m, "test")
-		m++
+		check(x == uint64(i)*2-1, "test")
 		x = OriginDistanceEncode(int64(i))
-		check(x == m, "test")
-		m++
+		check(x == (uint64(i)+1)*2, "test")
 	}
 
 	y = OriginDistanceDecode(0)
 	check(y == util.NullData, "test")
 	y = OriginDistanceDecode(1)
-	check(y == 0, "test")
-	n++
+	check(y == -1, "test")
 	for i := 2; i < 200; i++ {
 		y = OriginDistanceDecode(uint64(i))
-		check(y == -n, "test")
+		check(y == int64(i)/2-1, "test")
 		i++
 		y = OriginDistanceDecode(uint64(i))
-		check(y == n, "test")
-		n++
+		check(y == -(int64(i)+1)/2, "test")
 	}
 
 	check(true, "test")

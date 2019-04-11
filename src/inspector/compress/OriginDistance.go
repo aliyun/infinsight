@@ -7,7 +7,7 @@
 //                  turn a negative number into a positive number.
 //                  for example:
 //                  -5, -4, -3, -2, -1, nil, 0, 1, 2, 3, 4, 5
-//                  10,  8,  6,  4,  2,  0,  1, 3, 5, 7, 9, 11
+//                   9,  7,  5,  3,  1,  0,  2, 4, 6, 8,10,12
 //
 //        Version:  1.0
 //        Created:  07/25/2018 05:11:35 PM
@@ -35,9 +35,9 @@ func OriginDistanceEncode(x int64) uint64 {
 
 	var ux = uint64(x)
 	if x < 0 {
-		return (^ux + 1) << 1 // 2, 4, 6, 8, ...
+		return (^ux+1)<<1 - 1 // 1, 3, 5, 7, ...
 	}
-	return ((ux + 1) << 1) - 1 // 1, 3, 5, 7, ...
+	return (ux + 1) << 1 // 2, 4, 6, 8, ...
 }
 
 /*
@@ -51,9 +51,9 @@ func OriginDistanceDecode(ux uint64) int64 {
 		return util.NullData
 	}
 
-	if ux%2 == 0 {
-		return int64(^((ux >> 1) - 1))
-	} else {
-		return int64((ux+1)>>1) - 1
+	if ux%2 == 0 { // even
+		return int64(ux>>1) - 1
+	} else { // odd
+		return int64(^(((ux + 1) >> 1) - 1))
 	}
 }
