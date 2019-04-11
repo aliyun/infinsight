@@ -861,7 +861,7 @@ func (h *ApiHandler) mergeDataMap(xMap, yMap map[string][]int64) map[string][]in
 				xMap[xKey] = yValue
 			}
 			for i := 0; i < len(xValue); i++ {
-				if xValue[i] == util.NullData {
+				if xValue[i] == util.NullData && i < len(yValue) {
 					xValue[i] = yValue[i]
 				}
 			}
