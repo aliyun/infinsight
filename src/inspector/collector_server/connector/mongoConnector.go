@@ -5,7 +5,6 @@ import (
 
 	"inspector/client"
 	"inspector/util"
-	"inspector/util/unsafe"
 
 	"github.com/golang/glog"
 	"github.com/vinllen/mgo"
@@ -78,8 +77,7 @@ func (mc *mongoConnector) ensureNetwork() error {
 
 	address := fmt.Sprintf("%s?connect=direct;maxIdleTimeMS=5000", util.ConvertUnderline2Dot(mc.addr))
 	// 2. create client
-	mc.client, err = client.NewClient(util.Mongo, address, mc.username,
-		unsafe.Bytes2String(mc.password))
+	mc.client, err = client.NewClient(util.Mongo, address, mc.username, mc.password)
 	if err != nil {
 		return fmt.Errorf("create client with db-type[%s] address[%s] error[%v]", util.Mongo, mc.addr, err)
 	}
