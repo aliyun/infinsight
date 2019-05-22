@@ -69,17 +69,17 @@ func (mc *mongoConnector) ensureNetwork() error {
 
 	var err error
 
-	// 1. get real password
-	realPassword, err := util.DecryptCfb(util.Base64Decode(unsafe.String2Bytes(mc.password)))
-	if err != nil {
-		return fmt.Errorf("decrypt with service[%s] address[%s] password error[%v]",
-			mc.service, mc.addr, err)
-	}
+	// // 1. get real password
+	// realPassword, err := util.DecryptCfb(util.Base64Decode(unsafe.String2Bytes(mc.password)))
+	// if err != nil {
+	// 	return fmt.Errorf("decrypt with service[%s] address[%s] password error[%v]",
+	// 		mc.service, mc.addr, err)
+	// }
 
 	address := fmt.Sprintf("%s?connect=direct;maxIdleTimeMS=5000", util.ConvertUnderline2Dot(mc.addr))
 	// 2. create client
 	mc.client, err = client.NewClient(util.Mongo, address, mc.username,
-		unsafe.Bytes2String(realPassword))
+		unsafe.Bytes2String(mc.password))
 	if err != nil {
 		return fmt.Errorf("create client with db-type[%s] address[%s] error[%v]", util.Mongo, mc.addr, err)
 	}

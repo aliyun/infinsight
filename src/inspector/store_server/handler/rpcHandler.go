@@ -370,10 +370,10 @@ func (h *RpcHandler) Save(ctx context.Context, req *store.StoreSaveRequest) (*st
 		res.Error.Errno = 255
 		res.Error.Errmsg = err.Error()
 	}
-	h.timeTick("store to mongo")
+	h.timeTick(fmt.Sprintf("store[%d] to mongo", len(infoList)))
 
 	h.doStoreToCache(infoList)
-	h.timeTick("store to cache")
+	h.timeTick(fmt.Sprintf("store[%d] to cache", len(infoList)))
 
 	if glog.V(2) {
 		var durationAll, durationList = h.getTimeConsumeResult()
